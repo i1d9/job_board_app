@@ -32,6 +32,7 @@
 		F2464926299026340075C14F /* CompanyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2464925299026340075C14F /* CompanyProfileView.swift */; };
 		F24649282990264F0075C14F /* ApplicantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24649272990264F0075C14F /* ApplicantView.swift */; };
 		F246492A299026770075C14F /* AdvertiserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2464929299026770075C14F /* AdvertiserProfileView.swift */; };
+		F2D2169C299112A5002A95F5 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2169B299112A5002A95F5 /* SocketService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		F2464925299026340075C14F /* CompanyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileView.swift; sourceTree = "<group>"; };
 		F24649272990264F0075C14F /* ApplicantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicantView.swift; sourceTree = "<group>"; };
 		F2464929299026770075C14F /* AdvertiserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiserProfileView.swift; sourceTree = "<group>"; };
+		F2D2169B299112A5002A95F5 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				F24648FE299020130075C14F /* NetworkService.swift */,
 				F246490F2990209F0075C14F /* AuthPersistor.swift */,
 				F203CB9D2990D6200097AF64 /* NetworkModels.swift */,
+				F2D2169B299112A5002A95F5 /* SocketService.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				F2464920299025AC0075C14F /* JobForm.swift in Sources */,
 				F203CB9E2990D6200097AF64 /* NetworkModels.swift in Sources */,
 				F246490A299020730075C14F /* Job.swift in Sources */,
+				F2D2169C299112A5002A95F5 /* SocketService.swift in Sources */,
 				F2464922299025B80075C14F /* ApplicationDetails.swift in Sources */,
 				F24649102990209F0075C14F /* AuthPersistor.swift in Sources */,
 				F24649142990221B0075C14F /* HomeView.swift in Sources */,
