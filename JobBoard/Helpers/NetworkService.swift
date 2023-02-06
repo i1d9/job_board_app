@@ -60,6 +60,10 @@ class NetworkService {
                      do {
                          
                          let loaded_user  = try JSONDecoder().decode(AuthenticationResponse.self, from: responseData)
+                         
+                         
+                             KeychainHelper.standard.save(loaded_user.user, service: "strapi_job_authentication_service",
+                                                          account: "strapi_job_app")
                          NetworkService.current_user = loaded_user.user
                          completion(loaded_user.user)
                          
@@ -83,6 +87,49 @@ class NetworkService {
     }
     
     
+    func my_profile(completion: @escaping (User?) -> ()){
+        guard  let url = URL(string: "\(api_url)/users/me?populate=role")  else {
+            
+            completion(nil)
+            fatalError("Missing URL") }
+
+        var urlRequest = URLRequest(url: url)
+        
+        
+        
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+                   if let error = error {
+                       print("Request error: ", error)
+                       completion(nil)
+                       return
+                   }
+                   // ensure there is data returned
+                   guard let responseData = data else {
+                       print("nil Data received from the server")
+                       completion(nil)
+                       return
+                   }
+                   do {
+                       
+                       
+                       
+                       let user = try JSONDecoder().decode(User.self, from: responseData)
+                      
+                       completion(user)
+                   } catch let error {
+                       print(error.localizedDescription)
+                       completion(nil)
+
+                   }
+               }
+               
+               dataTask.resume()
+    }
+    
     func register(first_name:String, last_name: String, username: String,email:String, phone:String, password: String, completion: @escaping (User?) -> ()  ){
         
                 guard  let url = URL(string: "\(authentication_url)/local/register")  else {
@@ -100,7 +147,7 @@ class NetworkService {
                     "email" : email,
                     "first_name": first_name,
                     "last_name": last_name,
-                    "phone": phone
+                    "phone_number": phone
                 
                 ]
             
@@ -129,7 +176,9 @@ class NetworkService {
                       do {
                           
                           let loaded_user  = try JSONDecoder().decode(AuthenticationResponse.self, from: responseData)
-                          KeychainHelper.standard.save(loaded_user.user, service: "grocery_service", account: "grocery_delivery_app")
+                          
+                              KeychainHelper.standard.save(loaded_user.user, service: "strapi_job_authentication_service",
+                                                           account: "strapi_job_app")
                           NetworkService.current_user = loaded_user.user
                           completion(loaded_user.user)
                           

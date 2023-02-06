@@ -10,7 +10,6 @@
 		F203CB9E2990D6200097AF64 /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203CB9D2990D6200097AF64 /* NetworkModels.swift */; };
 		F203CBA02990DB8B0097AF64 /* ProfileForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203CB9F2990DB8B0097AF64 /* ProfileForm.swift */; };
 		F24648F029901FE70075C14F /* JobBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24648EF29901FE70075C14F /* JobBoardApp.swift */; };
-		F24648F229901FE70075C14F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24648F129901FE70075C14F /* ContentView.swift */; };
 		F24648F429901FE90075C14F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F24648F329901FE90075C14F /* Assets.xcassets */; };
 		F24648F729901FE90075C14F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F24648F629901FE90075C14F /* Preview Assets.xcassets */; };
 		F24648FF299020130075C14F /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24648FE299020130075C14F /* NetworkService.swift */; };
@@ -32,6 +31,9 @@
 		F2464926299026340075C14F /* CompanyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2464925299026340075C14F /* CompanyProfileView.swift */; };
 		F24649282990264F0075C14F /* ApplicantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24649272990264F0075C14F /* ApplicantView.swift */; };
 		F246492A299026770075C14F /* AdvertiserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2464929299026770075C14F /* AdvertiserProfileView.swift */; };
+		F271343529917B3C00D8633F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343429917B3C00D8633F /* ContentView.swift */; };
+		F271343729917CE400D8633F /* JobCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343629917CE400D8633F /* JobCard.swift */; };
+		F271343929917EBD00D8633F /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343829917EBD00D8633F /* DetailView.swift */; };
 		F2D2169C299112A5002A95F5 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2169B299112A5002A95F5 /* SocketService.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +42,6 @@
 		F203CB9F2990DB8B0097AF64 /* ProfileForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileForm.swift; sourceTree = "<group>"; };
 		F24648EC29901FE70075C14F /* JobBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JobBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F24648EF29901FE70075C14F /* JobBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobBoardApp.swift; sourceTree = "<group>"; };
-		F24648F129901FE70075C14F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F24648F329901FE90075C14F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F24648F629901FE90075C14F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F24648FE299020130075C14F /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -61,6 +62,9 @@
 		F2464925299026340075C14F /* CompanyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileView.swift; sourceTree = "<group>"; };
 		F24649272990264F0075C14F /* ApplicantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicantView.swift; sourceTree = "<group>"; };
 		F2464929299026770075C14F /* AdvertiserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiserProfileView.swift; sourceTree = "<group>"; };
+		F271343429917B3C00D8633F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F271343629917CE400D8633F /* JobCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCard.swift; sourceTree = "<group>"; };
+		F271343829917EBD00D8633F /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		F2D2169B299112A5002A95F5 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,7 +103,7 @@
 				F2464900299020230075C14F /* Models */,
 				F24648FD29901FFC0075C14F /* Helpers */,
 				F24648EF29901FE70075C14F /* JobBoardApp.swift */,
-				F24648F129901FE70075C14F /* ContentView.swift */,
+				F271343429917B3C00D8633F /* ContentView.swift */,
 				F24648F329901FE90075C14F /* Assets.xcassets */,
 				F24648F529901FE90075C14F /* Preview Content */,
 			);
@@ -145,6 +149,8 @@
 				F2464911299022100075C14F /* MessageView.swift */,
 				F24649132990221B0075C14F /* HomeView.swift */,
 				F2464929299026770075C14F /* AdvertiserProfileView.swift */,
+				F271343629917CE400D8633F /* JobCard.swift */,
+				F271343829917EBD00D8633F /* DetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -249,13 +255,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F24649042990204F0075C14F /* ProfileView.swift in Sources */,
-				F24648F229901FE70075C14F /* ContentView.swift in Sources */,
 				F24648FF299020130075C14F /* NetworkService.swift in Sources */,
 				F203CBA02990DB8B0097AF64 /* ProfileForm.swift in Sources */,
 				F2464908299020650075C14F /* RegisterView.swift in Sources */,
 				F2464926299026340075C14F /* CompanyProfileView.swift in Sources */,
+				F271343729917CE400D8633F /* JobCard.swift in Sources */,
 				F24649282990264F0075C14F /* ApplicantView.swift in Sources */,
 				F24649062990205B0075C14F /* LoginView.swift in Sources */,
+				F271343929917EBD00D8633F /* DetailView.swift in Sources */,
 				F246490E299020890075C14F /* User.swift in Sources */,
 				F2464912299022100075C14F /* MessageView.swift in Sources */,
 				F2464920299025AC0075C14F /* JobForm.swift in Sources */,
@@ -266,6 +273,7 @@
 				F24649102990209F0075C14F /* AuthPersistor.swift in Sources */,
 				F24649142990221B0075C14F /* HomeView.swift in Sources */,
 				F24648F029901FE70075C14F /* JobBoardApp.swift in Sources */,
+				F271343529917B3C00D8633F /* ContentView.swift in Sources */,
 				F246492A299026770075C14F /* AdvertiserProfileView.swift in Sources */,
 				F246491E299025920075C14F /* ApplicationView.swift in Sources */,
 				F2464916299024200075C14F /* JobApplication.swift in Sources */,

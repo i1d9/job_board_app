@@ -27,8 +27,8 @@ struct ProfileView: View {
                 Button(action: {
                     NetworkService.current_user = nil
                     AuthState.Authenticated.send(false)
-                    KeychainHelper.standard.delete(service: "strapi_job_authentication_service",
-                                                 account: "strapi_job_app")
+                    KeychainHelper.standard.delete( service: "strapi_job_authentication_service",
+                                                   account: "strapi_job_app")
                                      
                 }, label: {
                     Text("Log out")

@@ -27,8 +27,9 @@ struct LoginView: View {
                     user in
                     
                     if user != nil{
-                        KeychainHelper.standard.save(user, service: "strapi_job_authentication_service",
-                                                     account: "strapi_job_app")
+                        
+                            KeychainHelper.standard.save(user, service: "strapi_job_authentication_service",
+                                                         account: "strapi_job_app")
                         AuthState.Authenticated.send(true)
                     }
                 }
@@ -47,7 +48,7 @@ struct LoginView: View {
             
             
             
-        }.sheet(isPresented: $isRegisterPresented){
+        }.fullScreenCover(isPresented: $isRegisterPresented){
             RegisterView()
         }
     }
