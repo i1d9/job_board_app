@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+
+struct Message: Codable{
+    
+    
+    var from : User
+    var to : User
+    var text : String
+    
+}

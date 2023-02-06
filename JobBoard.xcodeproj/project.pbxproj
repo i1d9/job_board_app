@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F203CB9E2990D6200097AF64 /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203CB9D2990D6200097AF64 /* NetworkModels.swift */; };
+		F203CBA02990DB8B0097AF64 /* ProfileForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203CB9F2990DB8B0097AF64 /* ProfileForm.swift */; };
 		F24648F029901FE70075C14F /* JobBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24648EF29901FE70075C14F /* JobBoardApp.swift */; };
 		F24648F229901FE70075C14F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24648F129901FE70075C14F /* ContentView.swift */; };
 		F24648F429901FE90075C14F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F24648F329901FE90075C14F /* Assets.xcassets */; };
@@ -21,7 +23,7 @@
 		F24649102990209F0075C14F /* AuthPersistor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F246490F2990209F0075C14F /* AuthPersistor.swift */; };
 		F2464912299022100075C14F /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2464911299022100075C14F /* MessageView.swift */; };
 		F24649142990221B0075C14F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24649132990221B0075C14F /* HomeView.swift */; };
-		F2464916299024200075C14F /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2464915299024200075C14F /* Application.swift */; };
+		F2464916299024200075C14F /* JobApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2464915299024200075C14F /* JobApplication.swift */; };
 		F2464919299024E00075C14F /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = F2464918299024E00075C14F /* SocketIO */; };
 		F246491B299025630075C14F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F246491A299025630075C14F /* Message.swift */; };
 		F246491E299025920075C14F /* ApplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F246491D299025920075C14F /* ApplicationView.swift */; };
@@ -33,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F203CB9D2990D6200097AF64 /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModels.swift; sourceTree = "<group>"; };
+		F203CB9F2990DB8B0097AF64 /* ProfileForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileForm.swift; sourceTree = "<group>"; };
 		F24648EC29901FE70075C14F /* JobBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JobBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F24648EF29901FE70075C14F /* JobBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobBoardApp.swift; sourceTree = "<group>"; };
 		F24648F129901FE70075C14F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,7 +52,7 @@
 		F246490F2990209F0075C14F /* AuthPersistor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPersistor.swift; sourceTree = "<group>"; };
 		F2464911299022100075C14F /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		F24649132990221B0075C14F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		F2464915299024200075C14F /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		F2464915299024200075C14F /* JobApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobApplication.swift; sourceTree = "<group>"; };
 		F246491A299025630075C14F /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		F246491D299025920075C14F /* ApplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationView.swift; sourceTree = "<group>"; };
 		F246491F299025AC0075C14F /* JobForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobForm.swift; sourceTree = "<group>"; };
@@ -113,6 +117,7 @@
 			children = (
 				F24648FE299020130075C14F /* NetworkService.swift */,
 				F246490F2990209F0075C14F /* AuthPersistor.swift */,
+				F203CB9D2990D6200097AF64 /* NetworkModels.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -123,7 +128,7 @@
 				F2464909299020730075C14F /* Job.swift */,
 				F246490B2990207D0075C14F /* Company.swift */,
 				F246490D299020890075C14F /* User.swift */,
-				F2464915299024200075C14F /* Application.swift */,
+				F2464915299024200075C14F /* JobApplication.swift */,
 				F246491A299025630075C14F /* Message.swift */,
 			);
 			path = Models;
@@ -147,6 +152,7 @@
 				F24649032990204F0075C14F /* ProfileView.swift */,
 				F24649052990205B0075C14F /* LoginView.swift */,
 				F2464907299020650075C14F /* RegisterView.swift */,
+				F203CB9F2990DB8B0097AF64 /* ProfileForm.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -242,6 +248,7 @@
 				F24649042990204F0075C14F /* ProfileView.swift in Sources */,
 				F24648F229901FE70075C14F /* ContentView.swift in Sources */,
 				F24648FF299020130075C14F /* NetworkService.swift in Sources */,
+				F203CBA02990DB8B0097AF64 /* ProfileForm.swift in Sources */,
 				F2464908299020650075C14F /* RegisterView.swift in Sources */,
 				F2464926299026340075C14F /* CompanyProfileView.swift in Sources */,
 				F24649282990264F0075C14F /* ApplicantView.swift in Sources */,
@@ -249,6 +256,7 @@
 				F246490E299020890075C14F /* User.swift in Sources */,
 				F2464912299022100075C14F /* MessageView.swift in Sources */,
 				F2464920299025AC0075C14F /* JobForm.swift in Sources */,
+				F203CB9E2990D6200097AF64 /* NetworkModels.swift in Sources */,
 				F246490A299020730075C14F /* Job.swift in Sources */,
 				F2464922299025B80075C14F /* ApplicationDetails.swift in Sources */,
 				F24649102990209F0075C14F /* AuthPersistor.swift in Sources */,
@@ -256,7 +264,7 @@
 				F24648F029901FE70075C14F /* JobBoardApp.swift in Sources */,
 				F246492A299026770075C14F /* AdvertiserProfileView.swift in Sources */,
 				F246491E299025920075C14F /* ApplicationView.swift in Sources */,
-				F2464916299024200075C14F /* Application.swift in Sources */,
+				F2464916299024200075C14F /* JobApplication.swift in Sources */,
 				F246490C2990207D0075C14F /* Company.swift in Sources */,
 				F246491B299025630075C14F /* Message.swift in Sources */,
 			);
