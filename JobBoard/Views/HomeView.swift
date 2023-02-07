@@ -12,6 +12,7 @@ struct HomeView: View {
     
     private var network = NetworkService()
     
+    static let tag: String? = "HomeView"
     @State private var jobs : [Job] = []
     var body: some View {
         ScrollView{

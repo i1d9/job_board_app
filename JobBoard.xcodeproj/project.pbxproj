@@ -34,6 +34,7 @@
 		F271343529917B3C00D8633F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343429917B3C00D8633F /* ContentView.swift */; };
 		F271343729917CE400D8633F /* JobCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343629917CE400D8633F /* JobCard.swift */; };
 		F271343929917EBD00D8633F /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343829917EBD00D8633F /* DetailView.swift */; };
+		F271343B29922AFE00D8633F /* AcademicForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343A29922AFE00D8633F /* AcademicForm.swift */; };
 		F2D2169C299112A5002A95F5 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2169B299112A5002A95F5 /* SocketService.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		F271343429917B3C00D8633F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F271343629917CE400D8633F /* JobCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCard.swift; sourceTree = "<group>"; };
 		F271343829917EBD00D8633F /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		F271343A29922AFE00D8633F /* AcademicForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcademicForm.swift; sourceTree = "<group>"; };
 		F2D2169B299112A5002A95F5 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +153,7 @@
 				F2464929299026770075C14F /* AdvertiserProfileView.swift */,
 				F271343629917CE400D8633F /* JobCard.swift */,
 				F271343829917EBD00D8633F /* DetailView.swift */,
+				F271343A29922AFE00D8633F /* AcademicForm.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				F2464908299020650075C14F /* RegisterView.swift in Sources */,
 				F2464926299026340075C14F /* CompanyProfileView.swift in Sources */,
 				F271343729917CE400D8633F /* JobCard.swift in Sources */,
+				F271343B29922AFE00D8633F /* AcademicForm.swift in Sources */,
 				F24649282990264F0075C14F /* ApplicantView.swift in Sources */,
 				F24649062990205B0075C14F /* LoginView.swift in Sources */,
 				F271343929917EBD00D8633F /* DetailView.swift in Sources */,

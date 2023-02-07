@@ -15,10 +15,26 @@ struct ContentView: View {
     @ObservedObject var service =  SocketService()
     private var network = NetworkService()
   
+    @SceneStorage("selectedView") var selectedView: String?
+    
     @State var isAuthenticated = AuthState.IsAuthenticated()
     var body: some View {
         Group { isAuthenticated ?
-                   AnyView(HomeView()
+                   AnyView(
+                    
+                    TabView(selection: $selectedView) {
+                        HomeView().tabItem {
+                                            Label("Home", systemImage: "house")
+                                        }.tag(HomeView.tag)
+                        
+                        
+                        
+                        
+                        ProfileView().tabItem {
+                                            Label("Profile", systemImage: "person")
+                        }.tag(ProfileView.tag)
+                    }
+                    
                    ) :
                                              AnyView(LoginView())
                        }.onReceive(AuthState.Authenticated, perform: {

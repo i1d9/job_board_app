@@ -8,21 +8,36 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
+    
+    static let tag: String? = "ProfileView"
+    
+    private var network = NetworkService()
     var body: some View {
-        VStack{
-            
-            HStack{
-                Image(systemName: "person")
+        NavigationView {
+            VStack {
                 
-                VStack{
-                    HStack{
-                        Text(NetworkService.current_user!.first_name)
-                        Text(NetworkService.current_user!.last_name)
-                    }
-                    Text(NetworkService.current_user!.email)
+                HStack{
+                    Image(systemName: "person")
+                    
+                    VStack(alignment: .leading){
+                        HStack{
+                            Text(NetworkService.current_user!.first_name)
+                            Text(NetworkService.current_user!.last_name)
+                        }
+                        Text(NetworkService.current_user!.email)
 
+                    }
+                  
                 }
                 
+                
+             
+                
+                
+                NavigationLink( destination: ProfileForm()){
+                    Text("My Profile")
+                }
                 
                 Button(action: {
                     NetworkService.current_user = nil
@@ -33,6 +48,12 @@ struct ProfileView: View {
                 }, label: {
                     Text("Log out")
                 })
+                .navigationTitle("My Profile")
+            }
+        }.onAppear{
+            network.my_profile{user in
+                
+                print(user)
             }
         }
     }
