@@ -29,6 +29,6 @@ struct JobCard: View {
 
 struct JobCard_Previews: PreviewProvider {
     static var previews: some View {
-        JobCard(job: Job(name: "Job Title", description: "", company: Company(name: "", phone: "", email: "", address: "", category: ""), type: "", environment: "Remote", status: ""))
+        JobCard(job: Job(id: 0,name: "Job Title", description: "", type: "", environment: "Remote", status: ""))
     }
 }

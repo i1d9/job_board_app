@@ -8,8 +8,28 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    
+    private var network = NetworkService()
+    
+    @State private var jobs : [Job] = []
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView{
+            VStack{
+                
+                ForEach(jobs, id: \.id) { job in
+                
+                    
+                    JobCard(job: job)
+                }
+            }
+        }.onAppear{
+            
+            network.listJobs{fetched_jobs in
+
+                jobs = fetched_jobs
+            }
+        }
     }
 }
 

@@ -51,5 +51,23 @@ struct MyProfileResponse:Codable{
 }
 
 
+struct BulkJobServerResponse: Decodable {
+    
+    var data : [Job]
+    
+    
+    enum DataKeys: CodingKey {
+        case data
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: DataKeys.self)
+        
+        self.data = try container.decode([Job].self, forKey: .data)
+        
+    }
+    
+}
+
 
 

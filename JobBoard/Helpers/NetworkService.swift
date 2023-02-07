@@ -206,21 +206,77 @@ class NetworkService {
         
     }
     
-    func loadApplications(){
+    func loadApplications(completion: @escaping ([JobApplication]) -> ()){
         
+        guard let url = URL(string: "\(api_url)/groceries?populate=image") else {
+            completion([])
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
     }
     
     
-    func listCompanies(){
+    func listCompanies(completion: @escaping ([Company])-> ()){
         
+        guard let url = URL(string: "\(api_url)/groceries?populate=image") else {
+            completion([])
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
     }
     
     func viewApplication(id: Int){
         
     }
     
-    func listJobs(){
+    func listJobs(completion: @escaping ([Job]) -> ()){
         
+        guard let url = URL(string: "\(api_url)/jobs?populate=company") else {
+            completion([])
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = error {
+                    print("Request error: ", error)
+                    completion([])
+                    return
+                }
+                // ensure there is data returned
+                guard let responseData = data else {
+                    print("nil Data received from the server")
+                    completion([])
+                    return
+                }
+                do {
+                    
+                    
+                    print(responseData)
+                    
+                    let loaded_items = try JSONDecoder().decode(BulkJobServerResponse.self, from: responseData)
+                   
+                    print(loaded_items)
+                    
+                    completion(loaded_items.data)
+                } catch let error {
+                    print(error.localizedDescription)
+                    completion([])
+
+                }
+            }
+            
+            dataTask.resume()
     }
     
     func applyJob(introduction_letter: String, cirriculum_vitae: String){
