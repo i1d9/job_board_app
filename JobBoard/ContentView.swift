@@ -18,6 +18,8 @@ struct ContentView: View {
     @SceneStorage("selectedView") var selectedView: String?
     
     @State var isAuthenticated = AuthState.IsAuthenticated()
+    
+    
     var body: some View {
         Group { isAuthenticated ?
                    AnyView(
@@ -28,17 +30,18 @@ struct ContentView: View {
                                         }.tag(HomeView.tag)
                         
                         
-                        
-                        
                         ProfileView().tabItem {
                                             Label("Profile", systemImage: "person")
                         }.tag(ProfileView.tag)
                     }
+
                     
                    ) :
                                              AnyView(LoginView())
                        }.onReceive(AuthState.Authenticated, perform: {
                    isAuthenticated = $0
+                           
+                           
                            
                           
                })

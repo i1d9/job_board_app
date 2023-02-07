@@ -16,17 +16,37 @@ struct User: Codable{
     var first_name : String
     var last_name : String
     var token : String
-    var profile : String = ""
+    var profile : ProfileImage? = nil
+    var role : Role? = nil
     
     
+}
+
+
+struct ProfileImage : Codable {
+    
+    var small : String = ""
+    var medium : String = ""
+    var large : String = ""
+    var thumbnail : String = ""
+    var url : String = ""
+    
+ 
 }
 
 struct Role: Codable{
     var name : String
     var description: String
     
+    
+    private enum RoleKeys : String, CodingKey {
+        
+        case name = "name",description = "description"
+        
+        
+    }
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: RoleKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.description = try container.decode(String.self, forKey: .description)
     }

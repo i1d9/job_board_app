@@ -48,7 +48,7 @@ struct MyProfileResponse:Codable{
     var user: User
     
     enum UserDetailsKeys : String, CodingKey {
-    case id = "id", username = "username", email = "email", first_name = "first_name", last_name = "last_name", phone_number = "phone_number"
+    case id = "id", username = "username", email = "email", first_name = "first_name", last_name = "last_name", phone_number = "phone_number",role = "role", profile = "profile"
     }
     
     
@@ -62,8 +62,12 @@ struct MyProfileResponse:Codable{
         let last_name = try userDetailsContainer.decode(String.self, forKey: .last_name)
         let email = try userDetailsContainer.decode(String.self, forKey: .email)
         
+        let role = try userDetailsContainer.decode(Role.self, forKey: .role)
+        // let profile = try userDetailsContainer.decode(ProfileImage.self, forKey: .profile) Crashes the app if they dont have a dp
+
         
-        self.user = User(username: username, id: id, phone_number: phone_number, email: email, first_name: first_name, last_name: last_name, token: NetworkService.current_user!.token)
+        self.user = User(username: username, id: id, phone_number: phone_number, email: email, first_name: first_name, last_name: last_name, token: NetworkService.current_user!.token,  role: role )
+        
         
     }
     

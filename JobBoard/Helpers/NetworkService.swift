@@ -89,7 +89,8 @@ class NetworkService {
     
     
     func my_profile(completion: @escaping (User) -> ()){
-        guard  let url = URL(string: "\(api_url)/users/me?populate=role")  else {
+        
+        guard  let url = URL(string: "\(api_url)/users/me?populate=profile&populate=role")  else {
             
             completion(NetworkService.current_user!)
             fatalError("Missing URL") }
@@ -117,10 +118,14 @@ class NetworkService {
                    do {
                        
                        
+                       let profile_response = try JSONDecoder().decode(MyProfileResponse.self, from: responseData)
                        
-                       let user = try JSONDecoder().decode(User.self, from: responseData)
+                           KeychainHelper.standard.save(profile_response.user, service: "strapi_job_authentication_service",
+                                                        account: "strapi_job_app")
+                   
+                       NetworkService.current_user = profile_response.user
                       
-                       completion(user)
+                       completion(profile_response.user)
                    } catch let error {
                        print(error.localizedDescription)
                        completion(NetworkService.current_user!)
@@ -262,13 +267,8 @@ class NetworkService {
                 }
                 do {
                     
-                    
-                    print(responseData)
-                    
                     let loaded_items = try JSONDecoder().decode(BulkJobServerResponse.self, from: responseData)
                    
-                    print(loaded_items)
-                    
                     completion(loaded_items.data)
                 } catch let error {
                     print(error.localizedDescription)

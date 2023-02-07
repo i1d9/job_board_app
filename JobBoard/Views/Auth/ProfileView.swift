@@ -13,6 +13,11 @@ struct ProfileView: View {
     static let tag: String? = "ProfileView"
     
     private var network = NetworkService()
+    
+    @State private var username = ""
+    @State private var email = ""
+    @State private var first_name = ""
+    @State private var last_name = ""
     var body: some View {
         NavigationView {
             VStack {
@@ -22,18 +27,14 @@ struct ProfileView: View {
                     
                     VStack(alignment: .leading){
                         HStack{
-                            Text(NetworkService.current_user!.first_name)
-                            Text(NetworkService.current_user!.last_name)
+                            Text(first_name)
+                            Text(last_name)
                         }
-                        Text(NetworkService.current_user!.email)
+                        Text(email)
 
                     }
                   
                 }
-                
-                
-             
-                
                 
                 NavigationLink( destination: ProfileForm()){
                     Text("My Profile")
@@ -52,8 +53,11 @@ struct ProfileView: View {
             }
         }.onAppear{
             network.my_profile{user in
-                
-                print(user)
+                username = user.username
+                email = user.email
+                first_name = user.first_name
+                last_name = user.last_name
+               
             }
         }
     }
