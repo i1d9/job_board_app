@@ -17,17 +17,12 @@ struct HomeView: View {
     var body: some View {
         ScrollView{
             VStack{
-                
                 ForEach(jobs, id: \.id) { job in
-                
-                    
                     JobCard(job: job)
                 }
             }
         }.onAppear{
-            
             network.listJobs{fetched_jobs in
-
                 jobs = fetched_jobs
             }
         }

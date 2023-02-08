@@ -12,7 +12,7 @@ struct JobCard: View {
     var job : Job
     var body: some View {
         VStack{
-
+            
             HStack{
                 Text("Logo")
                 
@@ -22,7 +22,7 @@ struct JobCard: View {
                 }
             }
             
-
+            
         }
     }
 }

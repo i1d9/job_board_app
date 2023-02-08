@@ -18,7 +18,7 @@ struct AuthenticationResponse :  Codable{
         case user = "user"
         
         enum UserDetailsKeys : String, CodingKey {
-        case id = "id", username = "username", email = "email", first_name = "first_name", last_name = "last_name", phone_number = "phone_number"
+            case id = "id", username = "username", email = "email", first_name = "first_name", last_name = "last_name", phone_number = "phone_number"
         }
     }
     
@@ -45,7 +45,7 @@ struct MyProfileResponse:Codable{
     var user: User
     
     enum UserDetailsKeys : String, CodingKey {
-    case id = "id", username = "username", email = "email", first_name = "first_name", last_name = "last_name", phone_number = "phone_number",role = "role", profile = "profile"
+        case id = "id", username = "username", email = "email", first_name = "first_name", last_name = "last_name", phone_number = "phone_number",role = "role", profile = "profile"
     }
     
     
@@ -61,7 +61,7 @@ struct MyProfileResponse:Codable{
         
         let role = try userDetailsContainer.decode(Role.self, forKey: .role)
         // let profile = try userDetailsContainer.decode(ProfileImage.self, forKey: .profile) Crashes the app if they dont have a dp
-
+        
         
         self.user = User(username: username, id: id, phone_number: phone_number, email: email, first_name: first_name, last_name: last_name, token: NetworkService.current_user!.token,  role: role )
         
@@ -80,7 +80,7 @@ struct BulkJobServerResponse: Decodable {
     enum DataKeys: CodingKey {
         case data
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: DataKeys.self)
         
@@ -107,10 +107,10 @@ struct UploadImage {
 
 
 extension Data {
-   mutating func append(_ string: String) {
-      if let data = string.data(using: .utf8) {
-         append(data)
-         print("data======>>>",data)
-      }
-   }
+    mutating func append(_ string: String) {
+        if let data = string.data(using: .utf8) {
+            append(data)
+            print("data======>>>",data)
+        }
+    }
 }

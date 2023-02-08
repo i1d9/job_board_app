@@ -28,8 +28,8 @@ struct LoginView: View {
                     
                     if user != nil{
                         
-                            KeychainHelper.standard.save(user, service: "strapi_job_authentication_service",
-                                                         account: "strapi_job_app")
+                        KeychainHelper.standard.save(user, service: "strapi_job_authentication_service",
+                                                     account: "strapi_job_app")
                         AuthState.Authenticated.send(true)
                     }
                 }

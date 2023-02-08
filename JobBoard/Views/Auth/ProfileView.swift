@@ -18,6 +18,10 @@ struct ProfileView: View {
     @State private var email = ""
     @State private var first_name = ""
     @State private var last_name = ""
+    
+    @State var isCompany = AuthState.IsCompany()
+    
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -31,21 +35,30 @@ struct ProfileView: View {
                             Text(last_name)
                         }
                         Text(email)
-
+                        
                     }
-                  
+                    
                 }
+                
+                
                 
                 NavigationLink( destination: ProfileForm()){
                     Text("My Profile")
+                }
+                
+                
+                if isCompany{
+                    NavigationLink( destination: ProfileForm()){
+                        Text("Company Profile")
+                    }
                 }
                 
                 Button(action: {
                     NetworkService.current_user = nil
                     AuthState.Authenticated.send(false)
                     KeychainHelper.standard.delete( service: "strapi_job_authentication_service",
-                                                   account: "strapi_job_app")
-                                     
+                                                    account: "strapi_job_app")
+                    
                 }, label: {
                     Text("Log out")
                 })
@@ -57,7 +70,7 @@ struct ProfileView: View {
                 email = user.email
                 first_name = user.first_name
                 last_name = user.last_name
-               
+                
             }
         }
     }

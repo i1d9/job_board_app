@@ -36,9 +36,9 @@ struct RegisterView: View {
             SecureField("Password", text: $password)
             
             Picker("Account Type", selection: $selectedType) {
-                            ForEach(selectedTypes, id: \.self) {
-                                Text($0)
-            }
+                ForEach(selectedTypes, id: \.self) {
+                    Text($0)
+                }
             }.pickerStyle(SegmentedPickerStyle())
             
             Button(action: {

@@ -31,7 +31,7 @@ struct ProfileImage : Codable {
     var thumbnail : String = ""
     var url : String = ""
     
- 
+    
 }
 
 struct Role: Codable{
@@ -58,12 +58,24 @@ struct AuthState{
     static func IsAuthenticated() -> Bool {
         
         
-    let user = KeychainHelper.standard.read( service: "strapi_job_authentication_service",
+        let user = KeychainHelper.standard.read( service: "strapi_job_authentication_service",
                                                  account: "strapi_job_app",
-                                            type: User.self)
-            
-    NetworkService.current_user = user
-    return user != nil
+                                                 type: User.self)
+        
+        NetworkService.current_user = user
+        return user != nil
+    }
+    
+    
+    static func IsCompany() -> Bool {
+        
+        
+        let company = KeychainHelper.standard.read( service: "strapi_job_company_service",
+                                                    account: "strapi_job_app",
+                                                    type: Company.self)
+        
+        NetworkService.company = company
+        return company != nil
     }
 }
 
