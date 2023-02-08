@@ -16,7 +16,7 @@ struct JobCard: View {
             HStack{
                 Text("Logo")
                 
-                VStack{
+                VStack(alignment: .leading){
                     Text(job.name)
                     Text(job.environment)
                 }

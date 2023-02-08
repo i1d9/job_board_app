@@ -8,18 +8,26 @@
 import SwiftUI
 
 struct DetailView: View {
+    @State var job : Job
     var body: some View {
         ScrollView{
             VStack{
                 
+                Text(job.description)
+                Text(job.environment)
+                Text(job.type)
                 
+                Button("Apply Now"){
+                    
+                }
             }
-        }
+        }.navigationTitle(job.name)
+    
     }
 }
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView()
+        DetailView(job: Job(id: 0, name: "", description: "", type: "", environment: "", status: ""))
     }
 }

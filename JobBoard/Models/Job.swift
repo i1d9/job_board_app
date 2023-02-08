@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Job : Codable{
+struct Job : Codable, Identifiable{
     
     var id : Int
     var name : String

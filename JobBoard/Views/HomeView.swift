@@ -15,18 +15,27 @@ struct HomeView: View {
     static let tag: String? = "HomeView"
     @State private var jobs : [Job] = []
     var body: some View {
-        ScrollView{
-            VStack{
-                ForEach(jobs, id: \.id) { job in
-                    JobCard(job: job)
-                }
-            }
-        }.onAppear{
-            network.listJobs{fetched_jobs in
-                jobs = fetched_jobs
-            }
-        }
-    }
+        NavigationView{
+            
+            
+            List(jobs) { job in
+                            NavigationLink {
+                                DetailView(job: job)
+                            } label: {
+                                JobCard(job: job)
+                            }
+                        }.onAppear{
+                            network.listJobs{fetched_jobs in
+                                jobs = fetched_jobs
+                                print(jobs)
+                            }
+                        }
+
+                        .navigationTitle("Jobs")
+            
+          
+            
+        }}
 }
 
 struct HomeView_Previews: PreviewProvider {

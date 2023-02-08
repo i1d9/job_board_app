@@ -30,6 +30,9 @@ struct ContentView: View {
                                         }.tag(HomeView.tag)
                         
                         
+                        MessageView().tabItem{
+                            Label("Messages", systemImage: "mail")
+                        }.tag(MessageView.tag)
                         ProfileView().tabItem {
                                             Label("Profile", systemImage: "person")
                         }.tag(ProfileView.tag)
