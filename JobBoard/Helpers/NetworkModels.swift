@@ -36,9 +36,6 @@ struct AuthenticationResponse :  Codable{
         
         self.user = User(username: username, id: id, phone_number: phone_number, email: email, first_name: first_name, last_name: last_name, token: jwt )
         
-    
-        
-        
     }
     
 }

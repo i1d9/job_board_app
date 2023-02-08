@@ -35,6 +35,7 @@
 		F271343729917CE400D8633F /* JobCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343629917CE400D8633F /* JobCard.swift */; };
 		F271343929917EBD00D8633F /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343829917EBD00D8633F /* DetailView.swift */; };
 		F271343B29922AFE00D8633F /* AcademicForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343A29922AFE00D8633F /* AcademicForm.swift */; };
+		F27BFB8D29936C29009A55DF /* CompanyForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27BFB8C29936C29009A55DF /* CompanyForm.swift */; };
 		F2D2169C299112A5002A95F5 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2169B299112A5002A95F5 /* SocketService.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		F271343629917CE400D8633F /* JobCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCard.swift; sourceTree = "<group>"; };
 		F271343829917EBD00D8633F /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		F271343A29922AFE00D8633F /* AcademicForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcademicForm.swift; sourceTree = "<group>"; };
+		F27BFB8C29936C29009A55DF /* CompanyForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyForm.swift; sourceTree = "<group>"; };
 		F2D2169B299112A5002A95F5 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,6 +179,7 @@
 				F2464921299025B80075C14F /* ApplicationDetails.swift */,
 				F2464925299026340075C14F /* CompanyProfileView.swift */,
 				F24649272990264F0075C14F /* ApplicantView.swift */,
+				F27BFB8C29936C29009A55DF /* CompanyForm.swift */,
 			);
 			path = Company;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				F246490E299020890075C14F /* User.swift in Sources */,
 				F2464912299022100075C14F /* MessageView.swift in Sources */,
 				F2464920299025AC0075C14F /* JobForm.swift in Sources */,
+				F27BFB8D29936C29009A55DF /* CompanyForm.swift in Sources */,
 				F203CB9E2990D6200097AF64 /* NetworkModels.swift in Sources */,
 				F246490A299020730075C14F /* Job.swift in Sources */,
 				F2D2169C299112A5002A95F5 /* SocketService.swift in Sources */,

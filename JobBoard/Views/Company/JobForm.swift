@@ -8,8 +8,39 @@
 import SwiftUI
 
 struct JobForm: View {
+    
+    @State private var name = ""
+    @State private var description = "Briefly describe the position"
+    var types = ["Contract", "Consultancy","Internship","Long Term", "Short Term"]
+    
+    var environments = ["Remote", "On site", "Half Remote"]
+    
+    @State private var type = ""
+    @State private var environment = ""
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            ScrollView{
+                VStack{
+                    TextField("Name", text: $name)
+                    
+                    TextEditor(text: $description)
+                    
+                    Picker("Job Type", selection: $type){
+                        ForEach(types, id: \.self){type in
+                            Text(type)
+                        }
+                    }
+                    
+                    Picker("Environment", selection: $environment){
+                        ForEach(environments, id: \.self){env in
+                            Text(env)
+                        }
+                    }
+                    
+                    
+                }
+            }
+        }
     }
 }
 

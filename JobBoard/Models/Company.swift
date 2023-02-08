@@ -15,6 +15,7 @@ struct Company : Codable{
     var email : String
     var address : String
     var category : String //Tech/Pharma/Transport/NGO/Finance
+    var bio: String
 }
 
 

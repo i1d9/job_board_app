@@ -87,7 +87,6 @@ class NetworkService {
                   dataTask.resume()
     }
     
-    
     func my_profile(completion: @escaping (User) -> ()){
         
         guard  let url = URL(string: "\(api_url)/users/me?populate=profile&populate=role")  else {
@@ -280,17 +279,163 @@ class NetworkService {
             dataTask.resume()
     }
     
-    func applyJob(introduction_letter: String, cirriculum_vitae: String){
+    func applyJob(job: Int){
         
     }
     
+    func myApplications(completion: @escaping ([JobApplication]) -> ()){
+    
+        completion([])
+    }
     
     
-    func myApplications(){
+    func createJob(name: String, description:String, type: String, environment:String, company: Int, completion: @escaping (Bool) -> ()){
+        
+        
+        guard  let url = URL(string: "\(api_url)/jobs")  else {
+                    completion(false)
+                    fatalError("Missing URL")
+                    
+                }
+                var urlRequest = URLRequest(url: url)
+                urlRequest.httpMethod = "POST"
+                
+                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let parameters: [String: Any] = [
+            "name": name,
+            "description": description,
+            "type" : type,
+            "environment": environment,
+            "company": company
+        ]
+                
+                do {
+                   // convert parameters to Data and assign dictionary to httpBody of request
+                    urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+                    print(urlRequest)
+                 } catch let error {
+                   assertionFailure(error.localizedDescription)
+                     completion(false)
+                   return
+                 }
+        
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+                      if let error = error {
+                          print("Request error: ", error)
+                          completion(false)
+                          return
+                      }
+                   // ensure there is data returned
+                     guard let responseData = data else {
+                         assertionFailure("nil Data received from the server")
+                         completion(false)
+                       return
+                     }
+                     do {
+                         
+                       //TODO: Parse Response
+                         
+                     } catch let DecodingError.dataCorrupted(context) {
+                         print(context)
+                         completion(false)
+                     } catch let DecodingError.keyNotFound(key, context) {
+                         print("Key '\(key)' not found:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                         completion(false)
+                     } catch let DecodingError.valueNotFound(value, context) {
+                         print("Value '\(value)' not found:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                         completion(false)
+                     } catch let DecodingError.typeMismatch(type, context)  {
+                         print("Type '\(type)' mismatch:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                         completion(false)
+                     } catch let error {
+                         assertionFailure(error.localizedDescription)
+                         completion(false)
+                     }
+                  }
+                  dataTask.resume()
+        
         
         
     }
     
+    func createCompany(selectedImageData: Data?,name:String, email: String, phone: String, bio:String, category: String, completion: @escaping (Bool) -> ()){
+        
+        
+        
+        guard  let url = URL(string: "\(api_url)/companies")  else {
+                    completion(false)
+                    fatalError("Missing URL")
+                    
+                }
+                var urlRequest = URLRequest(url: url)
+                urlRequest.httpMethod = "POST"
+                
+                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let parameters: [String: Any] = [
+            "name": name,
+            "email": email,
+            "phone" : phone,
+            "bio": bio,
+            "category": category
+        ]
+        
+        
+        do {
+           // convert parameters to Data and assign dictionary to httpBody of request
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+            print(urlRequest)
+         } catch let error {
+           assertionFailure(error.localizedDescription)
+             completion(false)
+           return
+         }
+
+
+let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+              if let error = error {
+                  print("Request error: ", error)
+                  completion(false)
+                  return
+              }
+           // ensure there is data returned
+             guard let responseData = data else {
+                 assertionFailure("nil Data received from the server")
+                 completion(false)
+               return
+             }
+             do {
+                 
+               //TODO: Parse Response
+                 
+             } catch let DecodingError.dataCorrupted(context) {
+                 print(context)
+                 completion(false)
+             } catch let DecodingError.keyNotFound(key, context) {
+                 print("Key '\(key)' not found:", context.debugDescription)
+                 print("codingPath:", context.codingPath)
+                 completion(false)
+             } catch let DecodingError.valueNotFound(value, context) {
+                 print("Value '\(value)' not found:", context.debugDescription)
+                 print("codingPath:", context.codingPath)
+                 completion(false)
+             } catch let DecodingError.typeMismatch(type, context)  {
+                 print("Type '\(type)' mismatch:", context.debugDescription)
+                 print("codingPath:", context.codingPath)
+                 completion(false)
+             } catch let error {
+                 assertionFailure(error.localizedDescription)
+                 completion(false)
+             }
+          }
+          dataTask.resume()
+                
+             
+        
+    }
     
     private func generateBoundary() -> String {
        return "Boundary-\(NSUUID().uuidString)"
@@ -372,7 +517,6 @@ class NetworkService {
            
         dataTask.resume()
     }
-    
     
     func updateProfile(username: String, first_name: String, last_name:String,email:String, phone_number:String, completion: @escaping(User) -> ()){
         
