@@ -48,7 +48,7 @@ struct ProfileView: View {
                 
                 
                 if isCompany{
-                    NavigationLink( destination: ProfileForm()){
+                    NavigationLink( destination: CompanyProfileView()){
                         Text("Company Profile")
                     }
                 }

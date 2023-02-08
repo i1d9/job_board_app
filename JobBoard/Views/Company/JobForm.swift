@@ -15,15 +15,33 @@ struct JobForm: View {
     
     var environments = ["Remote", "On site", "Half Remote"]
     
-    @State private var type = ""
-    @State private var environment = ""
+    @State private var type = "Contract"
+    @State private var environment = "Remote"
+    
+    private var network = NetworkService()
     var body: some View {
         NavigationView{
             ScrollView{
                 VStack{
                     TextField("Name", text: $name)
                     
-                    TextEditor(text: $description)
+                    ZStack(alignment: .leading) {
+                        if self.description.isEmpty {
+                            VStack {
+                                Text("Description")
+                                    .padding(.top, 8)
+                                    .padding(.leading, 1)
+                                Spacer()
+                            }
+                        }
+                        TextEditor(text: self.$description)
+                        /* Set the background to that of the grouped background colour */
+                            .background(Color(.secondarySystemGroupedBackground))
+                        /* Allow the text overlay to be seen and emulate the necessary colour */
+                            .opacity(self.description.isEmpty ? 0.7 : 1)
+                    }
+                    .frame(height: 125)
+                    
                     
                     Picker("Job Type", selection: $type){
                         ForEach(types, id: \.self){type in
@@ -35,6 +53,13 @@ struct JobForm: View {
                         ForEach(environments, id: \.self){env in
                             Text(env)
                         }
+                    }
+                    
+                    Button("Submit"){
+                        network.createJob(name: name, description: description, type: type, environment: environment) { result in
+                            result
+                        }
+                        
                     }
                     
                     

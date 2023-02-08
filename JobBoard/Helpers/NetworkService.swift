@@ -288,7 +288,7 @@ class NetworkService {
     }
     
     
-    func createJob(name: String, description:String, type: String, environment:String, company: Int, completion: @escaping (Bool) -> ()){
+    func createJob(name: String, description:String, type: String, environment:String, completion: @escaping (Bool) -> ()){
         
         
         guard  let url = URL(string: "\(api_url)/jobs")  else {
@@ -307,13 +307,20 @@ class NetworkService {
             "description": description,
             "type" : type,
             "environment": environment,
-            "company": company
+            "company": NetworkService.company!.id
         ]
+        
+        
+        let params : [String : Any] = [
+            "data" : parameters
+        ]
+        
+        
         
         do {
             // convert parameters to Data and assign dictionary to httpBody of request
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
-            print(urlRequest)
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params)
+        
         } catch let error {
             assertionFailure(error.localizedDescription)
             completion(false)
@@ -328,7 +335,7 @@ class NetworkService {
                 return
             }
             // ensure there is data returned
-            guard let responseData = data else {
+            guard data != nil else {
                 assertionFailure("nil Data received from the server")
                 completion(false)
                 return
