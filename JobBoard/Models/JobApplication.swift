@@ -14,7 +14,7 @@ import Foundation
 struct MyApplication: Codable, Identifiable{
     
     var cv : CurriculumVitae
-    var job : Job
+    var job : MyApplicationJob
     var id: Int
     var status: String
     
@@ -27,7 +27,7 @@ struct MyApplication: Codable, Identifiable{
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MyApplicationKeys.self)
         self.cv = try container.decode(CurriculumVitae.self, forKey: .cv)
-        self.job = try container.decode(Job.self, forKey: .job)
+        self.job = try container.decode(MyApplicationJob.self, forKey: .job)
         self.id = try container.decode(Int.self, forKey: .id)
         self.status = try container.decode(String.self, forKey: .status)
     }

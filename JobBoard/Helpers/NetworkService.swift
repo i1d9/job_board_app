@@ -11,11 +11,11 @@ import PDFKit
 
 
 class NetworkService {
-     var base_url : String
-     var api_url : String
-     var authentication_url : String
+    var base_url : String
+    var api_url : String
+    var authentication_url : String
     static var current_user : User?
-    static var company : Company?
+    static var company : MyApplicationJobCompany?
     init() {
         
         self.base_url = "http://localhost:1337"
@@ -266,14 +266,6 @@ class NetworkService {
             }
             do {
                 
-                if let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] {
-                        // try to read out a string array
-//                        if let names = json["names"] as? [String] {
-//                            print(names)
-//                        }
-                    
-                    print(json)
-                    }
                 
                 let loaded_items = try JSONDecoder().decode(BulkJobServerResponse.self, from: responseData)
                 
@@ -443,8 +435,6 @@ class NetworkService {
             "data" : parameters
         ]
         
-        
-        
         do {
             // convert parameters to Data and assign dictionary to httpBody of request
             urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params)
@@ -498,7 +488,7 @@ class NetworkService {
         
     }
     
-    func createCompany(selectedImageData: Data?,name:String,address: String, email: String, phone: String, bio:String, category: String, completion: @escaping (Company?) -> ()){
+    func createCompany(selectedImageData: Data?,name:String,address: String, email: String, phone: String, bio:String, category: String, completion: @escaping (MyApplicationJobCompany?) -> ()){
         
         guard  let url = URL(string: "\(api_url)/companies")  else {
             completion(nil)
@@ -545,12 +535,14 @@ class NetworkService {
             }
             do {
                 
-                let company = try JSONDecoder().decode(Company.self, from: responseData)
-                KeychainHelper.standard.save(company, service: "strapi_job_company_service",
-                                             account: "strapi_job_app")
-                NetworkService.company = company
+                let _company = try JSONDecoder().decode(Company.self, from: responseData)
                 
-                completion(company)
+                
+                self.loadMyCompanyProfile{company_profile in
+                    
+                    completion(company_profile)
+                }
+              
                 
             } catch let DecodingError.dataCorrupted(context) {
                 print(context)
@@ -757,5 +749,64 @@ class NetworkService {
         
     }
     
+    
+    func loadMyCompanyProfile(completion: @escaping (MyApplicationJobCompany?) -> ()){
+        guard let url = URL(string: "\(api_url)/companies/me") else {
+            completion(nil)
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                completion(nil)
+
+                return
+            }
+            // ensure there is data returned
+            guard let responseData = data else {
+                print("nil Data received from the server")
+                completion(nil)
+
+                return
+            }
+            do {
+               
+                let company  = try JSONDecoder().decode(MyApplicationJobCompany.self, from: responseData)
+                
+                
+              
+        
+                completion(company)
+
+                
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+                completion(nil)
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                completion(nil)
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                completion(nil)
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                completion(nil)
+            } catch let error {
+                assertionFailure(error.localizedDescription)
+                completion(nil)
+            }
+        }
+        
+        dataTask.resume()
+        
+    }
     
 }

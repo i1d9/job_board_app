@@ -26,7 +26,7 @@ struct RegisterView: View {
         VStack{
             
             
-            Text("Get Started!")
+            Text("Get Started!").font(.title)
             
             TextField("First Name", text: $first_name)
             TextField("Last Name", text: $last_name)
@@ -45,10 +45,10 @@ struct RegisterView: View {
                 network.register(first_name: first_name, last_name: last_name, username: username, email: email, phone: phone_number, password: password){
                     user in
                     
-                    
                     if user != nil{
                         AuthState.Authenticated.send(true)
                     }
+                    
                 }
             }, label: {
                 Text("Create account")
@@ -60,7 +60,7 @@ struct RegisterView: View {
                 Text("Already have an account?Login")
             })
             
-        }
+        }.textFieldStyle(.roundedBorder).buttonStyle(.borderedProminent).padding(16)
     }
 }
 

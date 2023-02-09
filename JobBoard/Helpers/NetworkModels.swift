@@ -72,6 +72,66 @@ struct MyProfileResponse:Codable{
 }
 
 
+
+
+struct MyApplicationJobCompanyLogo : Codable, Identifiable{
+    var id : Int
+    var url : String
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.url = try container.decode(String.self, forKey: .url)
+    }
+}
+
+struct MyApplicationJobCompany : Codable, Identifiable{
+    var id : Int
+    var email : String
+    var name : String
+    var address : String
+    var category : String
+    var bio : String
+    var logo : MyApplicationJobCompanyLogo
+    
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.email = try container.decode(String.self, forKey: .email)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.address = try container.decode(String.self, forKey: .address)
+        self.category = try container.decode(String.self, forKey: .category)
+        self.bio = try container.decode(String.self, forKey: .bio)
+        self.logo = try container.decode(MyApplicationJobCompanyLogo.self, forKey: .logo)
+    }
+}
+
+struct MyApplicationJob: Codable, Identifiable {
+    
+    
+    
+    var id : Int
+    var name : String
+    var status : String
+    var environment: String
+    var type : String
+    var description : String
+    var company : MyApplicationJobCompany
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.status = try container.decode(String.self, forKey: .status)
+        self.environment = try container.decode(String.self, forKey: .environment)
+        self.type = try container.decode(String.self, forKey: .type)
+        self.description = try container.decode(String.self, forKey: .description)
+        self.company = try container.decode(MyApplicationJobCompany.self, forKey: .company)
+    }
+    
+}
+
 struct BulkJobServerResponse: Decodable {
     
     var data : [Job]

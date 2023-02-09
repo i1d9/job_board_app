@@ -18,32 +18,35 @@ struct LoginView: View {
         
         VStack{
             
-            Text("Welcome Back")
-            TextField("Username or Email Address", text: $identifier)
-            TextField("Password", text: $password)
-            
-            Button(action: {
-                network.login(identifier: identifier,  password: password){
-                    user in
-                    
-                    if user != nil{
-                        
-                        KeychainHelper.standard.save(user, service: "strapi_job_authentication_service",
-                                                     account: "strapi_job_app")
-                        AuthState.Authenticated.send(true)
-                    }
-                }
-            }, label: {
-                Text("Login")
-            })
+            Text("Welcome Back").font(.title)
             
             
-            Button(action: {
+            Group{
+                TextField("Username or Email Address", text: $identifier).textFieldStyle(.roundedBorder)
+                TextField("Password", text: $password).textFieldStyle(.roundedBorder)
                 
-                isRegisterPresented = true
-            }, label: {
-                Text("Create an account")
-            })
+                Button(action: {
+                    network.login(identifier: identifier,  password: password){
+                        user in
+                        
+                        if user != nil{
+                            
+                            KeychainHelper.standard.save(user, service: "strapi_job_authentication_service",
+                                                         account: "strapi_job_app")
+                            AuthState.Authenticated.send(true)
+                        }
+                    }
+                }, label: {
+                    Text("Login")
+                }).buttonStyle(.borderedProminent)
+                
+                Button(action: {
+                    isRegisterPresented = true
+                }, label: {
+                    Text("Create an account")
+                }).buttonStyle(.borderedProminent)
+                
+            }.padding(16)
             
             
             

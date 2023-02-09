@@ -50,7 +50,6 @@ struct ProfileView: View {
                             Text("Company Profile")
                         }
                     }else{
-                       
                         
                         NavigationLink( destination: MyApplications()){
                             Text("My Applications")
@@ -67,14 +66,6 @@ struct ProfileView: View {
                         Text("Log out")
                     })
                 }
-                
-               
-                
-                
-                
-                
-                
-             
                 .navigationTitle("My Profile")
             }
         }.onAppear{
@@ -85,6 +76,7 @@ struct ProfileView: View {
                 last_name = user.last_name
                 
             }
+            
         }
     }
 }

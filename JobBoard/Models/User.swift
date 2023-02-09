@@ -55,6 +55,7 @@ struct Role: Codable{
 
 struct AuthState{
     static let Authenticated = PassthroughSubject<Bool, Never>()
+    static let Company = PassthroughSubject<Bool, Never>()
     static func IsAuthenticated() -> Bool {
         
         
@@ -72,7 +73,7 @@ struct AuthState{
         
         let company = KeychainHelper.standard.read( service: "strapi_job_company_service",
                                                     account: "strapi_job_app",
-                                                    type: Company.self)
+                                                    type: MyApplicationJobCompany.self)
         
         NetworkService.company = company
         return company != nil

@@ -16,19 +16,50 @@ struct MyApplications: View {
     
     private var network = NetworkService()
     var body: some View {
-            ScrollView{
-                VStack{
-                    
-                    
-                    
+        
+        
+        
+        List(applications) { application in
             
+            VStack{
+                
+                HStack{
                     
-                }.onAppear{
-                    network.myApplications{applications in
-                        self.applications = applications
+                    
+                    AsyncImage(url: URL(string: "\(NetworkService().base_url)\(application.job.company.logo.url)")) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                        
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .clipShape(Circle())
+                    .overlay {
+                        Circle().stroke(.white, lineWidth: 1)
+                    }
+                    .shadow(radius: 7).frame(width: 50, height: 50)
+                    
+                    VStack(alignment: .leading){
+                        Text(application.job.name)
+                        Text(application.job.environment)
                     }
                 }
-            }.navigationTitle("My Applications")
+                
+                
+            }
+            
+        }
+        
+        
+        
+        .onAppear{
+            network.myApplications{applications in
+                self.applications = applications
+                
+            }
+            
+        }.navigationTitle("My Applications")
         
     }
 }
