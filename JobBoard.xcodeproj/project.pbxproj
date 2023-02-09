@@ -11,6 +11,8 @@
 		F203CBA02990DB8B0097AF64 /* ProfileForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203CB9F2990DB8B0097AF64 /* ProfileForm.swift */; };
 		F24314572994BE1100D53BEA /* JobApplicationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24314562994BE1100D53BEA /* JobApplicationForm.swift */; };
 		F243145929952BAC00D53BEA /* CompanyJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = F243145829952BAC00D53BEA /* CompanyJob.swift */; };
+		F243145B2995300C00D53BEA /* CompanyJobDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = F243145A2995300C00D53BEA /* CompanyJobDetail.swift */; };
+		F243145D299536DC00D53BEA /* ApplicationFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F243145C299536DC00D53BEA /* ApplicationFileView.swift */; };
 		F24648F029901FE70075C14F /* JobBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24648EF29901FE70075C14F /* JobBoardApp.swift */; };
 		F24648F429901FE90075C14F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F24648F329901FE90075C14F /* Assets.xcassets */; };
 		F24648F729901FE90075C14F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F24648F629901FE90075C14F /* Preview Assets.xcassets */; };
@@ -46,6 +48,8 @@
 		F203CB9F2990DB8B0097AF64 /* ProfileForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileForm.swift; sourceTree = "<group>"; };
 		F24314562994BE1100D53BEA /* JobApplicationForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobApplicationForm.swift; sourceTree = "<group>"; };
 		F243145829952BAC00D53BEA /* CompanyJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyJob.swift; sourceTree = "<group>"; };
+		F243145A2995300C00D53BEA /* CompanyJobDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyJobDetail.swift; sourceTree = "<group>"; };
+		F243145C299536DC00D53BEA /* ApplicationFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationFileView.swift; sourceTree = "<group>"; };
 		F24648EC29901FE70075C14F /* JobBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JobBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F24648EF29901FE70075C14F /* JobBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobBoardApp.swift; sourceTree = "<group>"; };
 		F24648F329901FE90075C14F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -186,6 +190,8 @@
 				F24649272990264F0075C14F /* ApplicantView.swift */,
 				F27BFB8C29936C29009A55DF /* CompanyForm.swift */,
 				F243145829952BAC00D53BEA /* CompanyJob.swift */,
+				F243145A2995300C00D53BEA /* CompanyJobDetail.swift */,
+				F243145C299536DC00D53BEA /* ApplicationFileView.swift */,
 			);
 			path = Company;
 			sourceTree = "<group>";
@@ -266,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F243145D299536DC00D53BEA /* ApplicationFileView.swift in Sources */,
 				F24649042990204F0075C14F /* ProfileView.swift in Sources */,
 				F24648FF299020130075C14F /* NetworkService.swift in Sources */,
 				F203CBA02990DB8B0097AF64 /* ProfileForm.swift in Sources */,
@@ -286,6 +293,7 @@
 				F2D2169C299112A5002A95F5 /* SocketService.swift in Sources */,
 				F2464922299025B80075C14F /* ApplicationDetails.swift in Sources */,
 				F24649102990209F0075C14F /* AuthPersistor.swift in Sources */,
+				F243145B2995300C00D53BEA /* CompanyJobDetail.swift in Sources */,
 				F24649142990221B0075C14F /* HomeView.swift in Sources */,
 				F24648F029901FE70075C14F /* JobBoardApp.swift in Sources */,
 				F271343529917B3C00D8633F /* ContentView.swift in Sources */,

@@ -147,3 +147,38 @@ struct Job : Codable, Identifiable{
     }
     
 }
+
+struct MyCompanyJob: Codable, Identifiable{
+    
+    
+    
+    
+    var id : Int
+    var name : String
+    var status : String
+    var type : String
+    var description: String
+    var environment : String
+    var applications : [MyCompanyApplication]
+    init(id: Int, name: String, status:String, type:String, description:String, environment:String) {
+        
+        self.id = id
+        self.name = name
+        self.status = status
+        self.type = type
+        self.description = description
+        self.environment = environment
+        self.applications = []
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.status = try container.decode(String.self, forKey: .status)
+        self.type = try container.decode(String.self, forKey: .type)
+        self.description = try container.decode(String.self, forKey: .description)
+        self.environment = try container.decode(String.self, forKey: .environment)
+        self.applications = try container.decode([MyCompanyApplication].self, forKey: .applications)
+    }
+}

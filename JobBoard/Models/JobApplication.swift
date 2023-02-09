@@ -63,3 +63,68 @@ struct JobApplication: Codable, Identifiable {
     
     
 }
+
+
+
+
+struct MyCompanyApplicationCV: Codable, Identifiable{
+    var id : Int
+    var url : String
+    
+    
+    init(id : Int, url : String) {
+        self.id = id
+        self.url = url
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.url = try container.decode(String.self, forKey: .url)
+    }
+}
+
+struct MyCompanyJobApplicant : Codable, Identifiable{
+    
+    var first_name : String
+    var last_name : String
+    var phone_number : String
+    var email :String
+    var id : Int
+    
+    init(id: Int,first_name: String, last_name:String, phone_number: String, email : String) {
+        
+        self.first_name = first_name
+        self.last_name = last_name
+        self.phone_number = phone_number
+        self.email = email
+        self.id = id
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.first_name = try container.decode(String.self, forKey: .first_name)
+        self.last_name = try container.decode(String.self, forKey: .last_name)
+        self.phone_number = try container.decode(String.self, forKey: .phone_number)
+        self.email = try container.decode(String.self, forKey: .email)
+        self.id = try container.decode(Int.self, forKey: .id)
+    }
+}
+
+struct MyCompanyApplication : Codable, Identifiable {
+    
+    var id : Int
+    var status : String
+    var cv : MyCompanyApplicationCV
+    var applicant : MyCompanyJobApplicant
+    
+    
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.status = try container.decode(String.self, forKey: .status)
+        self.cv = try container.decode(MyCompanyApplicationCV.self, forKey: .cv)
+        self.applicant = try container.decode(MyCompanyJobApplicant.self, forKey: .applicant)
+    }
+}

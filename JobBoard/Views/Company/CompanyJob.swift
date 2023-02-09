@@ -9,10 +9,22 @@ import SwiftUI
 
 struct CompanyJob: View {
     
-    private var network =  NetworkService()
+    private var network = NetworkService()
+    
+    @State private var jobs : [MyCompanyJob] = []
     var body: some View {
-        VStack{
+        List(jobs) { job in
             
+            NavigationLink(destination: CompanyJobDetail(job: job)){
+                Text(job.name)
+            }
+            
+        }.onAppear{
+            network.listMyJobs{company_jobs in
+                
+                jobs = company_jobs
+                print(jobs)
+            }
         }
     }
 }

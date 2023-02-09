@@ -240,6 +240,50 @@ class NetworkService {
         
     }
     
+    
+    
+    
+    func listMyJobs(completion: @escaping ([MyCompanyJob]) -> ()){
+        
+        guard let url = URL(string: "\(api_url)/jobs/mine") else {
+            completion([])
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                completion([])
+                return
+            }
+            // ensure there is data returned
+            guard let responseData = data else {
+                print("nil Data received from the server")
+                completion([])
+                return
+            }
+            do {
+                
+                
+                let loaded_items = try JSONDecoder().decode([MyCompanyJob].self, from: responseData)
+                
+                completion(loaded_items)
+            } catch let error {
+                print(error.localizedDescription)
+                completion([])
+                
+            }
+        }
+        
+        dataTask.resume()
+    }
+    
+    
     func listJobs(completion: @escaping ([Job]) -> ()){
         
         guard let url = URL(string: "\(api_url)/jobs?populate[company][populate][0]=logo") else {

@@ -16,7 +16,7 @@ struct CompanyProfileView: View {
                 Text("Edit Profile")
             }
           
-            NavigationLink(destination: JobForm()){ Text("My Jobs")}
+            NavigationLink(destination: CompanyJob()){ Text("My Jobs")}
             
          
             
