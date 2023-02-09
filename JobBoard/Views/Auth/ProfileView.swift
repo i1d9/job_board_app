@@ -50,11 +50,9 @@ struct ProfileView: View {
                             Text("Company Profile")
                         }
                     }else{
-                        NavigationLink( destination: AcademicForm()){
-                            Text("My Documents")
-                        }
+                       
                         
-                        NavigationLink( destination: ProfileForm()){
+                        NavigationLink( destination: MyApplications()){
                             Text("My Applications")
                         }
                     }

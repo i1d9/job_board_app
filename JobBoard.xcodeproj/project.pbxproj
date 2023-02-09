@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F203CB9E2990D6200097AF64 /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203CB9D2990D6200097AF64 /* NetworkModels.swift */; };
 		F203CBA02990DB8B0097AF64 /* ProfileForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203CB9F2990DB8B0097AF64 /* ProfileForm.swift */; };
+		F24314572994BE1100D53BEA /* JobApplicationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24314562994BE1100D53BEA /* JobApplicationForm.swift */; };
 		F24648F029901FE70075C14F /* JobBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24648EF29901FE70075C14F /* JobBoardApp.swift */; };
 		F24648F429901FE90075C14F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F24648F329901FE90075C14F /* Assets.xcassets */; };
 		F24648F729901FE90075C14F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F24648F629901FE90075C14F /* Preview Assets.xcassets */; };
@@ -34,7 +35,7 @@
 		F271343529917B3C00D8633F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343429917B3C00D8633F /* ContentView.swift */; };
 		F271343729917CE400D8633F /* JobCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343629917CE400D8633F /* JobCard.swift */; };
 		F271343929917EBD00D8633F /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343829917EBD00D8633F /* DetailView.swift */; };
-		F271343B29922AFE00D8633F /* AcademicForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343A29922AFE00D8633F /* AcademicForm.swift */; };
+		F271343B29922AFE00D8633F /* MyApplications.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343A29922AFE00D8633F /* MyApplications.swift */; };
 		F27BFB8D29936C29009A55DF /* CompanyForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27BFB8C29936C29009A55DF /* CompanyForm.swift */; };
 		F2D2169C299112A5002A95F5 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2169B299112A5002A95F5 /* SocketService.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 /* Begin PBXFileReference section */
 		F203CB9D2990D6200097AF64 /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModels.swift; sourceTree = "<group>"; };
 		F203CB9F2990DB8B0097AF64 /* ProfileForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileForm.swift; sourceTree = "<group>"; };
+		F24314562994BE1100D53BEA /* JobApplicationForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobApplicationForm.swift; sourceTree = "<group>"; };
 		F24648EC29901FE70075C14F /* JobBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JobBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F24648EF29901FE70075C14F /* JobBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobBoardApp.swift; sourceTree = "<group>"; };
 		F24648F329901FE90075C14F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,7 +69,7 @@
 		F271343429917B3C00D8633F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F271343629917CE400D8633F /* JobCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCard.swift; sourceTree = "<group>"; };
 		F271343829917EBD00D8633F /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		F271343A29922AFE00D8633F /* AcademicForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcademicForm.swift; sourceTree = "<group>"; };
+		F271343A29922AFE00D8633F /* MyApplications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApplications.swift; sourceTree = "<group>"; };
 		F27BFB8C29936C29009A55DF /* CompanyForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyForm.swift; sourceTree = "<group>"; };
 		F2D2169B299112A5002A95F5 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,7 +157,8 @@
 				F2464929299026770075C14F /* AdvertiserProfileView.swift */,
 				F271343629917CE400D8633F /* JobCard.swift */,
 				F271343829917EBD00D8633F /* DetailView.swift */,
-				F271343A29922AFE00D8633F /* AcademicForm.swift */,
+				F271343A29922AFE00D8633F /* MyApplications.swift */,
+				F24314562994BE1100D53BEA /* JobApplicationForm.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -266,7 +269,7 @@
 				F2464908299020650075C14F /* RegisterView.swift in Sources */,
 				F2464926299026340075C14F /* CompanyProfileView.swift in Sources */,
 				F271343729917CE400D8633F /* JobCard.swift in Sources */,
-				F271343B29922AFE00D8633F /* AcademicForm.swift in Sources */,
+				F271343B29922AFE00D8633F /* MyApplications.swift in Sources */,
 				F24649282990264F0075C14F /* ApplicantView.swift in Sources */,
 				F24649062990205B0075C14F /* LoginView.swift in Sources */,
 				F271343929917EBD00D8633F /* DetailView.swift in Sources */,
@@ -282,6 +285,7 @@
 				F24649142990221B0075C14F /* HomeView.swift in Sources */,
 				F24648F029901FE70075C14F /* JobBoardApp.swift in Sources */,
 				F271343529917B3C00D8633F /* ContentView.swift in Sources */,
+				F24314572994BE1100D53BEA /* JobApplicationForm.swift in Sources */,
 				F246492A299026770075C14F /* AdvertiserProfileView.swift in Sources */,
 				F246491E299025920075C14F /* ApplicationView.swift in Sources */,
 				F2464916299024200075C14F /* JobApplication.swift in Sources */,

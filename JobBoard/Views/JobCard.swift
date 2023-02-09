@@ -14,7 +14,21 @@ struct JobCard: View {
         VStack{
             
             HStack{
-                Text("Logo")
+                
+                
+                AsyncImage(url: URL(string: "\(NetworkService().base_url)\(job.company!.logo!.large)")) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                
+                        } placeholder: {
+                            ProgressView()
+                        }
+                    .clipShape(Circle())
+                                .overlay {
+                                    Circle().stroke(.white, lineWidth: 1)
+                                }
+                                .shadow(radius: 7).frame(width: 50, height: 50)
                 
                 VStack(alignment: .leading){
                     Text(job.name)

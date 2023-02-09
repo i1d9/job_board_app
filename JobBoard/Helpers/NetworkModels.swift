@@ -7,7 +7,7 @@
 
 import Foundation
 import PhotosUI
-
+import PDFKit
 
 struct AuthenticationResponse :  Codable{
     
@@ -101,6 +101,21 @@ struct UploadImage {
         self.filename = "imagefile.jpg"
         guard let data = image.jpegData(compressionQuality: 0.7) else { return nil }
         self.data = data
+    }
+}
+
+
+
+struct UploadPDF {
+    let key: String
+    let filename: String
+    let data: Data
+    let mimeType: String
+    init?(withPDF pdfdoc: PDFDocument, forKey key: String) {
+        self.key = key
+        self.mimeType = "application/pdf"
+        self.filename = "document.pdf"
+        self.data = pdfdoc.dataRepresentation()!
     }
 }
 

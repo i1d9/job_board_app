@@ -9,11 +9,15 @@ import SwiftUI
 
 struct DetailView: View {
     @State var job : Job
-    
+
+    @State var isPresented  = false
+
     private var network = NetworkService()
     
+
     init(job: Job) {
         self.job = job
+        
     }
     var body: some View {
         ScrollView{
@@ -23,14 +27,15 @@ struct DetailView: View {
                 Text(job.environment)
                 Text(job.type)
                 
+                
                 Button("Apply Now"){
-                    print(job.id)
-                    network.applyJob(job: job.id){application in
-                        
-                        print(application)
-                        
-                    }
+                    isPresented = true
                 }
+                
+
+                
+            }.fullScreenCover(isPresented: $isPresented){
+                JobApplicationForm(parsed_job: job)
             }
         }.navigationTitle(job.name)
     

@@ -7,12 +7,13 @@
 
 import Foundation
 import PhotosUI
+import PDFKit
 
 
 class NetworkService {
-    private var base_url : String
-    private var api_url : String
-    private var authentication_url : String
+     var base_url : String
+     var api_url : String
+     var authentication_url : String
     static var current_user : User?
     static var company : Company?
     init() {
@@ -241,7 +242,7 @@ class NetworkService {
     
     func listJobs(completion: @escaping ([Job]) -> ()){
         
-        guard let url = URL(string: "\(api_url)/jobs?populate=company") else {
+        guard let url = URL(string: "\(api_url)/jobs?populate[company][populate][0]=logo") else {
             completion([])
             return
         }
@@ -265,6 +266,15 @@ class NetworkService {
             }
             do {
                 
+                if let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] {
+                        // try to read out a string array
+//                        if let names = json["names"] as? [String] {
+//                            print(names)
+//                        }
+                    
+                    print(json)
+                    }
+                
                 let loaded_items = try JSONDecoder().decode(BulkJobServerResponse.self, from: responseData)
                 
                 completion(loaded_items.data)
@@ -278,12 +288,67 @@ class NetworkService {
         dataTask.resume()
     }
     
-    func applyJob(job: Int, completion: @escaping (Bool) -> ()){
-        guard let url = URL(string: "\(api_url)/applications") else {
-            completion(false)
+    
+    func myApplications(completion: @escaping ([MyApplication]) -> ()){
+        
+        guard  let url = URL(string: "\(api_url)/applications/mine")  else {
+            completion([])
+            fatalError("Missing URL")
+            
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                completion([])
+                return
+            }
+            // ensure there is data returned
+            guard let responseData = data else {
+                print("nil Data received from the server")
+                completion([])
+                return
+            }
+            do {
+                
+                let loaded_items = try JSONDecoder().decode([MyApplication].self, from: responseData)
+                completion(loaded_items)
+            } catch let error {
+                print(error.localizedDescription)
+                completion([])
+                
+            }
+        }
+        
+        dataTask.resume()
+    }
+    
+    
+    func companyApplications(job_id: Int,completion: @escaping ([JobApplication]) -> ()){
+        guard let url = URL(string: "\(api_url)/job/applications") else {
+            
+            completion([])
             return
         }
         
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+    }
+    
+    func createApplication(selectedImageData: Data?, job:Int, completion: @escaping (Bool?) -> ()){
+        
+        guard  let url = URL(string: "\(api_url)/applications")  else {
+            completion(false)
+            fatalError("Missing URL")
+            
+        }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
@@ -291,19 +356,19 @@ class NetworkService {
         
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let parameters: [String: Any] = [
-            "job": job
-            
+            "job": String(job)
         ]
         
-        do {
-            // convert parameters to Data and assign dictionary to httpBody of request
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
-            print(urlRequest)
-        } catch let error {
-            assertionFailure(error.localizedDescription)
-            completion(false)
-            return
-        }
+        //create boundary
+        let boundary = generateBoundary()
+        //set content type
+        urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        guard let document = UploadPDF(withPDF:  PDFDocument(data: selectedImageData!)!, forKey: "cv") else { return }
+        
+        let dataBody = uploadBody(withParameters: parameters, media: [document], boundary: boundary)
+        
+        urlRequest.httpBody = dataBody
         
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let error = error {
@@ -319,19 +384,25 @@ class NetworkService {
             }
             do {
                 
-                //TODO: Parse JSON
+                print(responseData)
+                
+                completion(true)
                 
             } catch let DecodingError.dataCorrupted(context) {
                 print(context)
+                completion(false)
             } catch let DecodingError.keyNotFound(key, context) {
                 print("Key '\(key)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                completion(false)
             } catch let DecodingError.valueNotFound(value, context) {
                 print("Value '\(value)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                completion(false)
             } catch let DecodingError.typeMismatch(type, context)  {
                 print("Type '\(type)' mismatch:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                completion(false)
             } catch let error {
                 assertionFailure(error.localizedDescription)
                 completion(false)
@@ -343,10 +414,6 @@ class NetworkService {
         
     }
     
-    func myApplications(completion: @escaping ([JobApplication]) -> ()){
-        
-        completion([])
-    }
     
     
     func createJob(name: String, description:String, type: String, environment:String, completion: @escaping (Bool) -> ()){
@@ -381,7 +448,7 @@ class NetworkService {
         do {
             // convert parameters to Data and assign dictionary to httpBody of request
             urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params)
-        
+            
         } catch let error {
             assertionFailure(error.localizedDescription)
             completion(false)
@@ -460,7 +527,7 @@ class NetworkService {
         
         guard let mediaImage = UploadImage(withImage: UIImage(data: selectedImageData!)!, forKey: "logo") else { return }
         
-        let dataBody = imageUploadBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
+        let dataBody = uploadBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
         
         urlRequest.httpBody = dataBody
         
@@ -517,7 +584,31 @@ class NetworkService {
     
     public typealias Parameters = [String: Any]
     
-    private func imageUploadBody(withParameters params: Parameters?, media: [UploadImage]?, boundary: String) -> Data {
+    private func uploadBody(withParameters params: Parameters?, media: [UploadImage]?, boundary: String) -> Data {
+        let lineBreak = "\r\n"
+        var body = Data()
+        if let parameters = params {
+            for (key, value) in parameters {
+                body.append("--\(boundary + lineBreak)")
+                body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+                body.append("\(value as! String + lineBreak)")
+            }
+        }
+        if let media = media {
+            for photo in media {
+                body.append("--\(boundary + lineBreak)")
+                body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.filename)\"\(lineBreak)")
+                body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
+                body.append(photo.data)
+                body.append(lineBreak)
+            }
+        }
+        body.append("--\(boundary)--\(lineBreak)")
+        return body
+    }
+    
+    
+    private func uploadBody(withParameters params: Parameters?, media: [UploadPDF]?, boundary: String) -> Data {
         let lineBreak = "\r\n"
         var body = Data()
         if let parameters = params {
@@ -567,7 +658,7 @@ class NetworkService {
             
         ]
         
-        let dataBody = imageUploadBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
+        let dataBody = uploadBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
         
         urlRequest.httpBody = dataBody
         

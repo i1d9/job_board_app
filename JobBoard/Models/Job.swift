@@ -29,15 +29,61 @@ struct Job : Codable, Identifiable{
     
     
     private enum JobDataKeys: String, CodingKey {
-            case id = "id"
-            case attributes = "attributes"
+        case id = "id",attributes = "attributes"
+        
+        
+        enum AttributeKeys : String, CodingKey {
+            case name = "name",description = "description",company = "company",type="type",environment = "environment", status = "status"
             
             
-            enum AttributeKeys : String, CodingKey {
-                
-                case name = "name",description = "description",company = "company",type="type",environment = "environment", status = "status"
+            enum CompanyKey : String, CodingKey{
+                case data = "data"
+                enum CompanyDataKeys : String, CodingKey {
+                    case id = "id", attributes = "attributes"
+                    
+                    enum CompanyDataAttributesKeys : String, CodingKey{
+                        case address = "address",bio = "bio",category = "category",email = "email", name = "name", phone = "phone",
+                             logo = "logo"
+                        
+                        enum CompanyLogoKey : String, CodingKey{
+                            case data = "data"
+                            
+                            enum CompanyLogoAttributes : String, CodingKey {
+                                case attributes = "attributes"
+                                
+                                enum CompanyLogoAttributeKeys : String, CodingKey {
+                                    case url = "url", formats = "formats"
+                                    
+                                    enum CompanyLogoAttributeFormatsKeys : String, CodingKey {
+                                        
+                                        case large = "large", medium = "medium", small = "small", thumbnail = "thumbnail", url = "url"
+                                        
+                                        enum CompanyLogoFormartsLarge: String, CodingKey{
+                                            case url = "url"
+                                        }
+                                        
+                                        enum CompanyLogoFormartsThumbnail: String, CodingKey{
+                                            case url = "url"
+                                        }
+                                        
+                                        enum CompanyLogoFormartsSmall: String, CodingKey{
+                                            case url = "url"
+                                        }
+                                        
+                                        
+                                        enum CompanyLogoFormartsMedium: String, CodingKey{
+                                            case url = "url"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                }
             }
         }
+    }
     
     init(from decoder: Decoder) throws {
         
@@ -50,12 +96,54 @@ struct Job : Codable, Identifiable{
         let attributesContainer = try jobDataKeysContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.self, forKey: .attributes)
         
         self.name = try attributesContainer.decode(String.self, forKey: .name)
-        
         self.description = try attributesContainer.decode(String.self, forKey: .description)
-        //self.company = try jobDataKeysContainer.decode(Company.self, forKey: .company)
         self.type = try attributesContainer.decode(String.self, forKey: .type)
         self.environment = try attributesContainer.decode(String.self, forKey: .environment)
         self.status = try attributesContainer.decode(String.self, forKey: .status)
+        
+        let companyContainer = try attributesContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.self, forKey: .company)
+        let companyDataContainer = try companyContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.self, forKey: .data)
+        
+        let company_id = try companyDataContainer.decode(Int.self, forKey: .id)
+        
+        
+        let companyDataAttributesContainer = try companyDataContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.CompanyDataAttributesKeys.self, forKey: .attributes)
+        
+        let company_address = try companyDataAttributesContainer.decode(String.self, forKey: .address)
+        let company_bio = try companyDataAttributesContainer.decode(String.self, forKey: .bio)
+        let company_category = try companyDataAttributesContainer.decode(String.self, forKey: .category)
+        let company_name = try companyDataAttributesContainer.decode(String.self, forKey: .name)
+        let company_phone = try companyDataAttributesContainer.decode(String.self, forKey: .phone)
+        let company_email = try companyDataAttributesContainer.decode(String.self, forKey: .email)
+        
+        
+        let companyLogoRootContainer = try companyDataAttributesContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.CompanyDataAttributesKeys.CompanyLogoKey.self, forKey: .logo)
+        
+        
+        let companyLogoDataContainer = try companyLogoRootContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.CompanyDataAttributesKeys.CompanyLogoKey.CompanyLogoAttributes.self, forKey: .data)
+        
+        let companyLogoDataAttributesContainer = try companyLogoDataContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.CompanyDataAttributesKeys.CompanyLogoKey.CompanyLogoAttributes.CompanyLogoAttributeKeys.self, forKey: .attributes)
+        
+        let logo_url = try companyLogoDataAttributesContainer.decode(String.self, forKey: .url)
+        
+        let companyLogoDataAttributesKeysFormatContainer = try companyLogoDataAttributesContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.CompanyDataAttributesKeys.CompanyLogoKey.CompanyLogoAttributes.CompanyLogoAttributeKeys.CompanyLogoAttributeFormatsKeys.self, forKey: .formats)
+        
+        let companyLogoDataAttributesKeysFormatLargeContainer = try companyLogoDataAttributesKeysFormatContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.CompanyDataAttributesKeys.CompanyLogoKey.CompanyLogoAttributes.CompanyLogoAttributeKeys.CompanyLogoAttributeFormatsKeys.CompanyLogoFormartsLarge.self, forKey: .large)
+        
+        let companyLogoDataAttributesKeysFormatSmallContainer = try companyLogoDataAttributesKeysFormatContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.CompanyDataAttributesKeys.CompanyLogoKey.CompanyLogoAttributes.CompanyLogoAttributeKeys.CompanyLogoAttributeFormatsKeys.CompanyLogoFormartsSmall.self, forKey: .small)
+        
+        let companyLogoDataAttributesKeysFormatMediumContainer = try companyLogoDataAttributesKeysFormatContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.CompanyDataAttributesKeys.CompanyLogoKey.CompanyLogoAttributes.CompanyLogoAttributeKeys.CompanyLogoAttributeFormatsKeys.CompanyLogoFormartsMedium.self, forKey: .medium)
+        
+        let companyLogoDataAttributesKeysFormatThumbnailContainer = try companyLogoDataAttributesKeysFormatContainer.nestedContainer(keyedBy: JobDataKeys.AttributeKeys.CompanyKey.CompanyDataKeys.CompanyDataAttributesKeys.CompanyLogoKey.CompanyLogoAttributes.CompanyLogoAttributeKeys.CompanyLogoAttributeFormatsKeys.CompanyLogoFormartsThumbnail.self, forKey: .thumbnail)
+        
+        let thumbnail = try companyLogoDataAttributesKeysFormatThumbnailContainer.decode(String.self, forKey: .url)
+        let medium = try companyLogoDataAttributesKeysFormatMediumContainer.decode(String.self, forKey: .url)
+        let large = try companyLogoDataAttributesKeysFormatLargeContainer.decode(String.self, forKey: .url)
+        let small = try companyLogoDataAttributesKeysFormatSmallContainer.decode(String.self, forKey: .url)
+        let company_logo = CompanyLogo(url: logo_url, thumbnail: thumbnail, small: small, medium: medium, large: large)
+        
+        self.company = Company(id: company_id, name: company_name, phone: company_phone, email: company_email, address: company_address, category: company_category, bio: company_bio, logo: company_logo)
+        
     }
     
 }
