@@ -278,7 +278,68 @@ class NetworkService {
         dataTask.resume()
     }
     
-    func applyJob(job: Int){
+    func applyJob(job: Int, completion: @escaping (Bool) -> ()){
+        guard let url = URL(string: "\(api_url)/applications") else {
+            completion(false)
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+        
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let parameters: [String: Any] = [
+            "job": job
+            
+        ]
+        
+        do {
+            // convert parameters to Data and assign dictionary to httpBody of request
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+            print(urlRequest)
+        } catch let error {
+            assertionFailure(error.localizedDescription)
+            completion(false)
+            return
+        }
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                completion(false)
+                return
+            }
+            // ensure there is data returned
+            guard let responseData = data else {
+                assertionFailure("nil Data received from the server")
+                completion(false)
+                return
+            }
+            do {
+                
+                //TODO: Parse JSON
+                
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let error {
+                assertionFailure(error.localizedDescription)
+                completion(false)
+            }
+        }
+        dataTask.resume()
+        
+        
         
     }
     

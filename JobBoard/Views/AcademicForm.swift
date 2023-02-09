@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
+import PDFKit
 
 struct AcademicForm: View {
     var body: some View {
-        NavigationView{
             ScrollView{
                 VStack{
                     
@@ -22,8 +22,8 @@ struct AcademicForm: View {
                         Text("Upload Files")
                     }
                 }
-            }.navigationTitle("Job Application Documents")
-        }
+            }.navigationTitle("Your Documents")
+        
     }
 }
 

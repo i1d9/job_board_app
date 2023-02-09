@@ -9,6 +9,12 @@ import SwiftUI
 
 struct DetailView: View {
     @State var job : Job
+    
+    private var network = NetworkService()
+    
+    init(job: Job) {
+        self.job = job
+    }
     var body: some View {
         ScrollView{
             VStack{
@@ -18,7 +24,12 @@ struct DetailView: View {
                 Text(job.type)
                 
                 Button("Apply Now"){
-                    
+                    print(job.id)
+                    network.applyJob(job: job.id){application in
+                        
+                        print(application)
+                        
+                    }
                 }
             }
         }.navigationTitle(job.name)

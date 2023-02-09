@@ -24,7 +24,7 @@ struct ProfileView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(alignment: .leading){
                 
                 HStack{
                     Image(systemName: "person")
@@ -40,28 +40,43 @@ struct ProfileView: View {
                     
                 }
                 
-                
-                
-                NavigationLink( destination: ProfileForm()){
-                    Text("My Profile")
-                }
-                
-                
-                if isCompany{
-                    NavigationLink( destination: CompanyProfileView()){
-                        Text("Company Profile")
+                List{
+                    NavigationLink( destination: ProfileForm()){
+                        Text("My Profile")
                     }
+                    
+                    if isCompany{
+                        NavigationLink( destination: CompanyProfileView()){
+                            Text("Company Profile")
+                        }
+                    }else{
+                        NavigationLink( destination: AcademicForm()){
+                            Text("My Documents")
+                        }
+                        
+                        NavigationLink( destination: ProfileForm()){
+                            Text("My Applications")
+                        }
+                    }
+                    
+                    Button(action: {
+                        NetworkService.current_user = nil
+                        AuthState.Authenticated.send(false)
+                        KeychainHelper.standard.delete( service: "strapi_job_authentication_service",
+                                                        account: "strapi_job_app")
+                        
+                    }, label: {
+                        Text("Log out")
+                    })
                 }
                 
-                Button(action: {
-                    NetworkService.current_user = nil
-                    AuthState.Authenticated.send(false)
-                    KeychainHelper.standard.delete( service: "strapi_job_authentication_service",
-                                                    account: "strapi_job_app")
-                    
-                }, label: {
-                    Text("Log out")
-                })
+               
+                
+                
+                
+                
+                
+             
                 .navigationTitle("My Profile")
             }
         }.onAppear{
