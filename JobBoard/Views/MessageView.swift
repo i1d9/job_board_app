@@ -11,8 +11,12 @@ struct MessageView: View {
     static let tag: String? = "MessageView"
     var body: some View {
         NavigationView{
-            VStack{
-                Text("Messages")
+            
+            
+            List{
+                NavigationLink(destination: MessageDetailView()) {
+                    Text("Messages")
+                }
             }.navigationTitle("My Messages")
             
         }

@@ -41,6 +41,7 @@
 		F271343B29922AFE00D8633F /* MyApplications.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271343A29922AFE00D8633F /* MyApplications.swift */; };
 		F27BFB8D29936C29009A55DF /* CompanyForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27BFB8C29936C29009A55DF /* CompanyForm.swift */; };
 		F2D2169C299112A5002A95F5 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2169B299112A5002A95F5 /* SocketService.swift */; };
+		F2DB019B2996521E0060DF5E /* MessageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DB019A2996521E0060DF5E /* MessageDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		F271343A29922AFE00D8633F /* MyApplications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApplications.swift; sourceTree = "<group>"; };
 		F27BFB8C29936C29009A55DF /* CompanyForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyForm.swift; sourceTree = "<group>"; };
 		F2D2169B299112A5002A95F5 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
+		F2DB019A2996521E0060DF5E /* MessageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				F246491C299025720075C14F /* Company */,
 				F24649022990203F0075C14F /* Auth */,
 				F2464911299022100075C14F /* MessageView.swift */,
+				F2DB019A2996521E0060DF5E /* MessageDetailView.swift */,
 				F24649132990221B0075C14F /* HomeView.swift */,
 				F2464929299026770075C14F /* AdvertiserProfileView.swift */,
 				F271343629917CE400D8633F /* JobCard.swift */,
@@ -277,6 +280,7 @@
 				F24648FF299020130075C14F /* NetworkService.swift in Sources */,
 				F203CBA02990DB8B0097AF64 /* ProfileForm.swift in Sources */,
 				F2464908299020650075C14F /* RegisterView.swift in Sources */,
+				F2DB019B2996521E0060DF5E /* MessageDetailView.swift in Sources */,
 				F2464926299026340075C14F /* CompanyProfileView.swift in Sources */,
 				F271343729917CE400D8633F /* JobCard.swift in Sources */,
 				F271343B29922AFE00D8633F /* MyApplications.swift in Sources */,
