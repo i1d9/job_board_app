@@ -189,3 +189,41 @@ extension Data {
         }
     }
 }
+
+
+struct SocketMessage : Codable, Identifiable {
+    var room : String
+    var id : Int
+//    var items : [SocketMessageItem]
+
+    
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.room = try container.decode(String.self, forKey: .room)
+        self.id = try container.decode(Int.self, forKey: .id)
+//        self.items = try container.decode([SocketMessageItem].self, forKey: .items)
+    }
+}
+
+struct SocketMessageItem: Codable, Identifiable{
+    
+    
+    
+    
+    var id : String
+    var sender : Int
+    var receiver : Int
+    var text : String
+    var created : Int
+    
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.sender = try container.decode(Int.self, forKey: .sender)
+        self.receiver = try container.decode(Int.self, forKey: .receiver)
+        self.text = try container.decode(String.self, forKey: .text)
+        self.created = try container.decode(Int.self, forKey: .created)
+    }
+}

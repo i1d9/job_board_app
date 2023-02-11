@@ -6,13 +6,11 @@
 //
 
 import SwiftUI
-import SocketIO
 
 
 struct ContentView: View {
     
     
-    @ObservedObject var service =  SocketService()
     private var network = NetworkService()
   
     @SceneStorage("selectedView") var selectedView: String?

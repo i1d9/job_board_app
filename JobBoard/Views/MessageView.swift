@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SocketIO
+
 
 struct MessageView: View {
+    
+    @ObservedObject var service =  SocketService()
     static let tag: String? = "MessageView"
     var body: some View {
         NavigationView{

@@ -57,7 +57,7 @@ struct ProfileForm: View {
                 
                 TextField("First Name", text: $first_name)
                 TextField("Last Name", text: $last_name)
-                TextField("Username", text: $username)
+                TextField("Username", text: $username).disabled(true)
                 TextField("Email Address", text: $email)
                 TextField("Phone Number", text: $phone_number)
                 
