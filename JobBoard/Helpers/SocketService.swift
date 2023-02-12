@@ -24,21 +24,24 @@ struct MM: Codable{
 }
 
 final class SocketService : ObservableObject{
-    private var manager = SocketManager(socketURL: URL(string: "ws://127.0.0.1:1337")!, config: [.log(true), .compress])
+    private var manager = SocketManager(socketURL: URL(string: "ws://127.0.0.1:1337")!, config: [ .compress])
     
+    @Published var socket_messages : [SocketMessage] = []
+    
+    let socket : SocketIOClient
     init(){
-        let socket = manager.defaultSocket
+        self.socket = manager.defaultSocket
         
-        socket.on(clientEvent: .connect, callback: {data, ack in
+        self.socket.on(clientEvent: .connect, callback: {data, ack in
             
             
             print("Connected")
         })
         
         
-        socket.on("messages") {data, ack in
+        self.socket.on("messages") {data, ack in
             
-            print("Here")
+            
             guard let cur = data[0] as? String else { return }
             let jsonObjectData = cur.data(using: .utf8)!
 
@@ -48,8 +51,8 @@ final class SocketService : ObservableObject{
                 from: jsonObjectData
             )
             
-            print(candidate?.payload)
             
+            self.socket_messages = candidate!.payload
             
             
 
@@ -57,6 +60,22 @@ final class SocketService : ObservableObject{
         
         
         socket.connect(withPayload: ["token": NetworkService.current_user!.token])
+    }
+    
+    
+    func sendMesage(room_name: String, message : String) {
+        
+        self.socket.emit("send_message", ["room": room_name, "text": message])
+    }
+    
+    
+    func joinRoom(room_name: String){
+        self.socket.emit("join_room", ["room": room_name])
+    }
+    
+    
+    func exitRoom(room_name: String){
+        self.socket.emit("exit_room", ["room": room_name])
     }
 }
 

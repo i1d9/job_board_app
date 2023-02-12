@@ -194,15 +194,37 @@ extension Data {
 struct SocketMessage : Codable, Identifiable {
     var room : String
     var id : Int
-//    var items : [SocketMessageItem]
+    var texts : [SocketMessageItem]
 
+    var sender : String = ""
+    var receiver : String = ""
+    
+ 
+    
+    init(id: Int, room:String, texts: [SocketMessageItem]){
+        self.id = id
+        self.room = room
+        self.texts = texts
+    }
     
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.room = try container.decode(String.self, forKey: .room)
         self.id = try container.decode(Int.self, forKey: .id)
-//        self.items = try container.decode([SocketMessageItem].self, forKey: .items)
+        self.texts = try container.decode([SocketMessageItem].self, forKey: .texts)
+        
+        let users = self.room.components(separatedBy: "_")
+        
+        
+        if(NetworkService.current_user?.username == users[0]){
+            self.sender = users[0]
+            self.receiver = users[1]
+        }else{
+            self.sender = users[1]
+            self.receiver = users[0]
+        }
+        
     }
 }
 
@@ -212,17 +234,15 @@ struct SocketMessageItem: Codable, Identifiable{
     
     
     var id : String
-    var sender : Int
-    var receiver : Int
+    var source : Int
     var text : String
     var created : Int
-    
+
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
-        self.sender = try container.decode(Int.self, forKey: .sender)
-        self.receiver = try container.decode(Int.self, forKey: .receiver)
+        self.source = try container.decode(Int.self, forKey: .source)
         self.text = try container.decode(String.self, forKey: .text)
         self.created = try container.decode(Int.self, forKey: .created)
     }
