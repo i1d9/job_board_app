@@ -24,12 +24,16 @@ struct CompanyJobDetail: View {
                     List(job.applications){application in
                         
                         
-                        NavigationLink(destination: ApplicationFileView(applicant: application.applicant, cv: application.cv)){
-                            HStack{
-                                Text(application.applicant.first_name)
-                                Text(application.applicant.last_name)
+                        NavigationLink(destination:
+                                        
+                                        
+                                        ApplicationFileView(
+                                            applicant: application.applicant, cv: application.cv, job: job)){
+                                HStack{
+                                    Text(application.applicant.first_name)
+                                    Text(application.applicant.last_name)
+                                }
                             }
-                        }
                         
                     }
                 }

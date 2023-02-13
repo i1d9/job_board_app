@@ -91,12 +91,14 @@ struct MyCompanyJobApplicant : Codable, Identifiable{
     var phone_number : String
     var email :String
     var id : Int
+    var username: String
     
-    init(id: Int,first_name: String, last_name:String, phone_number: String, email : String) {
+    init(id: Int,first_name: String, last_name:String, phone_number: String, email : String, username: String) {
         
         self.first_name = first_name
         self.last_name = last_name
         self.phone_number = phone_number
+        self.username = username
         self.email = email
         self.id = id
     }
@@ -108,6 +110,7 @@ struct MyCompanyJobApplicant : Codable, Identifiable{
         self.phone_number = try container.decode(String.self, forKey: .phone_number)
         self.email = try container.decode(String.self, forKey: .email)
         self.id = try container.decode(Int.self, forKey: .id)
+        self.username = try container.decode(String.self, forKey: .username)
     }
 }
 

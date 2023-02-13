@@ -20,7 +20,7 @@ struct MessageDetailView: View {
                 VStack(alignment: .trailing){
                     
                     
-                    ForEach(socketMessage.texts, id:
+                    ForEach(socket.room.texts, id:
                                 \.id){text in
                         
                         if(text.source == NetworkService.current_user?.id ){
@@ -31,10 +31,6 @@ struct MessageDetailView: View {
                         }
                         
                     }
-                    
-                    
-                    
-                    
                     
                 }.navigationTitle(socketMessage.receiver).onAppear{
                     print(NetworkService.current_user!.id)
@@ -58,9 +54,13 @@ struct MessageDetailView: View {
             
         }.onAppear{
             
+            
+            
+            socket.joinRoom(room_name: socketMessage.room)
             print("Entering")
         }.onDisappear{
             print("Exiting")
+            socket.exitRoom(room_name: socketMessage.room)
         }
     }
 }

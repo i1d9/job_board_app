@@ -27,6 +27,7 @@ final class SocketService : ObservableObject{
     private var manager = SocketManager(socketURL: URL(string: "ws://127.0.0.1:1337")!, config: [ .compress])
     
     @Published var socket_messages : [SocketMessage] = []
+    @Published var room : SocketMessage = SocketMessage(id: 0, room: "", texts: [])
     
     let socket : SocketIOClient
     init(){
@@ -37,6 +38,8 @@ final class SocketService : ObservableObject{
             
             print("Connected")
         })
+        
+        
         
         
         self.socket.on("messages") {data, ack in
@@ -57,6 +60,28 @@ final class SocketService : ObservableObject{
             
 
         }
+        
+        
+        
+        self.socket.on("room_messages") {data, ack in
+            
+            
+            guard let cur = data[0] as? String else { return }
+            let jsonObjectData = cur.data(using: .utf8)!
+
+            // Decode the json data to a Candidate struct
+            let candidate = try? JSONDecoder().decode(
+                SocketMessage.self,
+                from: jsonObjectData
+            )
+            
+            
+            self.room = candidate!
+            
+            
+
+        }
+        
         
         
         socket.connect(withPayload: ["token": NetworkService.current_user!.token])

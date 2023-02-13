@@ -378,6 +378,79 @@ class NetworkService {
         
     }
     
+    
+    func updateApplication(job:Int, applicant_username: String, application_id: Int,status:String){
+        guard  let url = URL(string: "\(api_url)/applications/\(application_id)")  else {
+           
+            fatalError("Missing URL")
+            
+        }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "PUT"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+        
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let parameters: [String: Any] = [
+            "job": String(job),
+            "applicant_username": applicant_username,
+            "status": status
+        ]
+        
+        
+        do {
+            // convert parameters to Data and assign dictionary to httpBody of request
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+            print(urlRequest)
+        } catch let error {
+            assertionFailure(error.localizedDescription)
+         
+            return
+        }
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+         
+                return
+            }
+            // ensure there is data returned
+            guard let responseData = data else {
+                assertionFailure("nil Data received from the server")
+        
+                return
+            }
+            do {
+                
+                if let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] {
+                        // try to read out a string array
+                        if let names = json["names"] as? [String] {
+                            print(names)
+                        }
+                    }
+                
+                
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let error {
+                assertionFailure(error.localizedDescription)
+              
+            }
+        }
+        dataTask.resume()
+        
+        
+    }
+    
     func createApplication(selectedImageData: Data?, job:Int, completion: @escaping (Bool?) -> ()){
         
         guard  let url = URL(string: "\(api_url)/applications")  else {
@@ -586,7 +659,7 @@ class NetworkService {
                     
                     completion(company_profile)
                 }
-              
+                
                 
             } catch let DecodingError.dataCorrupted(context) {
                 print(context)
@@ -808,25 +881,25 @@ class NetworkService {
             if let error = error {
                 print("Request error: ", error)
                 completion(nil)
-
+                
                 return
             }
             // ensure there is data returned
             guard let responseData = data else {
                 print("nil Data received from the server")
                 completion(nil)
-
+                
                 return
             }
             do {
-               
+                
                 let company  = try JSONDecoder().decode(MyApplicationJobCompany.self, from: responseData)
                 
                 
-              
-        
+                
+                
                 completion(company)
-
+                
                 
             } catch let DecodingError.dataCorrupted(context) {
                 print(context)

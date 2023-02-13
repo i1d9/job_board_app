@@ -26,8 +26,6 @@ struct MessageView: View {
             List(){
                 ForEach(service.socket_messages){message in
                     NavigationLink(destination: MessageDetailView(
-                        
-                        
 
                         socketMessage: message,
                     
