@@ -9,15 +9,15 @@ import SwiftUI
 
 struct JobForm: View {
     
-    @State var job : Job = Job(id: 0, name: "", description: "", type: "", environment: "", status: "")
+    @State var job : Job
     
-    init(job: Job){
-        self.job = job
-    }
+   
     
+    @State private var showingAlert = false
     
-    @State private var name = ""
-    @State private var description = "Briefly describe the position"
+    @State  var name = ""
+    @State  var message = ""
+    @State  var description = "Briefly describe the position"
     var types = [
         "Contract",
         "Consultancy",
@@ -28,11 +28,14 @@ struct JobForm: View {
     
     var environments = ["Remote", "On site", "Half Remote"]
     
-    @State private var type = "Contract"
-    @State private var environment = "Remote"
+    @State  var type = "Contract"
+    @State  var environment = "Remote"
     
-    @Environment(\.dismiss) private var dismiss
-    private var network = NetworkService()
+    
+    
+    @Environment(\.dismiss)  var dismiss
+    @Environment(\.presentationMode) var presentationMode
+     var network = NetworkService()
     var body: some View {
         ScrollView{
             VStack{
@@ -71,10 +74,15 @@ struct JobForm: View {
                 Button("Submit"){
                     
                     if(self.job.id == 0){
-                        network.createJob(name: name, description: description, type: type, environment: environment) { inserted_job in
+                        network.createJob(name: self.job.name, description: self.job.description, type:  self.job.type, environment: self.job.environment) { inserted_job in
                             
                             if inserted_job != nil{
-                                dismiss()
+                                
+                                
+                                showingAlert = true
+                                message = "Successfully created the job posting"
+                                
+                                
                             }
                         }
                         
@@ -83,25 +91,32 @@ struct JobForm: View {
                         network.editJob(id: self.job.id, name: self.job.name, description: self.job.description, type: self.job.type, environment: self.job.environment){update_job in
                             
                             if update_job != nil{
-                                dismiss()
+                                showingAlert = true
+                                message = "Successfully update the job posting"
+                                
+                            
                             }
                         }
                         
                     }
                     
-                }.buttonStyle(.borderedProminent)
+                }.buttonStyle(.borderedProminent) .alert(message, isPresented: $showingAlert) {
+                    Button("OK", role: .cancel) {
+                        dismiss()
+                    }
+                }
                 
                 
-            }.navigationTitle("Job Details")
+            }.navigationTitle("Job Details").padding(16)
         }
         
     }
 }
 
-struct JobForm_Previews: PreviewProvider {
-    
-    
-    static var previews: some View {
-        JobForm(job: Job(id: 0, name: "", description: "", type: "", environment: "", status: ""))
-    }
-}
+//struct JobForm_Previews: PreviewProvider {
+//
+//
+//    static var previews: some View {
+//        JobForm(job: .constant(Job(id: 0, name: "", description: "", type: "", environment: "", status: "")).projectedValue)
+//    }
+//}

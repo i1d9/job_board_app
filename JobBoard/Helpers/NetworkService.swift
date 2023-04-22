@@ -560,6 +560,8 @@ class NetworkService {
             // convert parameters to Data and assign dictionary to httpBody of request
             urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params)
             
+            
+            
         } catch let error {
             assertionFailure(error.localizedDescription)
             completion(nil)
@@ -579,30 +581,21 @@ class NetworkService {
                 completion(nil)
                 return
             }
+            
             do {
-                
-                let job  = try JSONDecoder().decode(Job.self, from: responseData)
-                completion(job)
-                
-            } catch let DecodingError.dataCorrupted(context) {
-                print(context)
-                completion(nil)
-            } catch let DecodingError.keyNotFound(key, context) {
-                print("Key '\(key)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-                completion(nil)
-            } catch let DecodingError.valueNotFound(value, context) {
-                print("Value '\(value)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-                completion(nil)
-            } catch let DecodingError.typeMismatch(type, context)  {
-                print("Type '\(type)' mismatch:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-                completion(nil)
-            } catch let error {
-                assertionFailure(error.localizedDescription)
+                // make sure this JSON is in the format we expect
+                if let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] {
+                    // try to read out a string array
+                   print(json)
+                    
+                    completion(Job(id: json["id"] as! Int, name: json["name"] as! String, description: json["description"] as! String, type: "", environment: "", status: ""))
+                }
+            } catch let error as NSError {
+                print("Failed to load: \(error.localizedDescription)")
                 completion(nil)
             }
+            
+            
         }
         dataTask.resume()
         

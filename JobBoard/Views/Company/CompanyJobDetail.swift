@@ -13,6 +13,7 @@ struct CompanyJobDetail: View {
     @Environment(\.dismiss) private var dismiss
     
     private var network = NetworkService()
+    @State private var visibleJobForm = false
     
     init(job: MyCompanyJob, network: NetworkService = NetworkService()) {
         self.job = job
@@ -46,23 +47,28 @@ struct CompanyJobDetail: View {
                     }
                 }
             }
+        }.sheet(isPresented: $visibleJobForm){
+            
+            JobForm(job: Job(id: job.id, name: job.name, description: job.description, type: job.type, environment: job.environment, status: job.status))
+            
         }.navigationTitle(job.name).toolbar {
             ToolbarItem {
               
                 
-                NavigationLink("Edit"){
-                    JobForm(job: Job(id: job.id, name: job.name, description: job.description, type: job.type, environment: job.environment, status: job.status))
+                Button("Edit"){
+                    visibleJobForm = true
                 }
             }
             
             ToolbarItem {
                 Button("Delete"){
-                    network.deleteJob(job_id: job.id){job in
-                        if job != nil{
-                            dismiss()
-                        }
+                    network.deleteJob(job_id: job.id){_job in
+                      
                         
-                }}
+                }
+                    dismiss()
+                    
+                }
             }
             
         }

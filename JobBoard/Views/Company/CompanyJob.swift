@@ -10,7 +10,7 @@ import SwiftUI
 struct CompanyJob: View {
     
     private var network = NetworkService()
-    
+    @State private var visibleJobForm = false
     @State private var jobs : [MyCompanyJob] = []
     var body: some View {
        
@@ -20,14 +20,18 @@ struct CompanyJob: View {
                     Text(job.name)
                 }
                 
+            }.sheet(isPresented: $visibleJobForm){
+                
+                JobForm(job: Job(id: 0, name: "Job Title", description: "Job Description", type: "", environment: "", status: "initiated"))
+                
             }.navigationBarTitle("My Jobs").toolbar {
                 ToolbarItem {
-                 
                     
-                    NavigationLink("Add"){
-                        
-                        JobForm(job: Job(id: 0, name: "", description: "", type: "", environment: "", status: ""))
-                    }                }
+                    
+                    Button("Add"){
+                        visibleJobForm = true
+                    }
+                }
                 
             }.onAppear{
                 network.listMyJobs{company_jobs in
