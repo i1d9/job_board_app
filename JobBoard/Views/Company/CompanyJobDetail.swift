@@ -10,6 +10,15 @@ import SwiftUI
 struct CompanyJobDetail: View {
     
     var job : MyCompanyJob
+    @Environment(\.dismiss) private var dismiss
+    
+    private var network = NetworkService()
+    
+    init(job: MyCompanyJob, network: NetworkService = NetworkService()) {
+        self.job = job
+        self.network = network
+    }
+    
     var body: some View {
         VStack{
             
@@ -26,9 +35,8 @@ struct CompanyJobDetail: View {
                         
                         NavigationLink(destination:
                                         
-                                        
                                         ApplicationFileView(
-                                            applicant: application.applicant, cv: application.cv, job: job)){
+                                            current_application: application, job: job)){
                                 HStack{
                                     Text(application.applicant.first_name)
                                     Text(application.applicant.last_name)
@@ -40,15 +48,21 @@ struct CompanyJobDetail: View {
             }
         }.navigationTitle(job.name).toolbar {
             ToolbarItem {
-                Button("Edit"){
-                    
+              
+                
+                NavigationLink("Edit"){
+                    JobForm(job: Job(id: job.id, name: job.name, description: job.description, type: job.type, environment: job.environment, status: job.status))
                 }
             }
             
             ToolbarItem {
                 Button("Delete"){
-                    
-                }
+                    network.deleteJob(job_id: job.id){job in
+                        if job != nil{
+                            dismiss()
+                        }
+                        
+                }}
             }
             
         }

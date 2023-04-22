@@ -126,6 +126,8 @@ class NetworkService {
                 
                 NetworkService.current_user = profile_response.user
                 
+                print(profile_response.user)
+                
                 completion(profile_response.user)
             } catch let error {
                 print(error.localizedDescription)
@@ -183,7 +185,6 @@ class NetworkService {
             do {
                 
                 let loaded_user  = try JSONDecoder().decode(AuthenticationResponse.self, from: responseData)
-                
                 KeychainHelper.standard.save(loaded_user.user, service: "strapi_job_authentication_service",
                                              account: "strapi_job_app")
                 NetworkService.current_user = loaded_user.user
@@ -191,15 +192,19 @@ class NetworkService {
                 
             } catch let DecodingError.dataCorrupted(context) {
                 print(context)
+                completion(nil)
             } catch let DecodingError.keyNotFound(key, context) {
                 print("Key '\(key)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                completion(nil)
             } catch let DecodingError.valueNotFound(value, context) {
                 print("Value '\(value)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                completion(nil)
             } catch let DecodingError.typeMismatch(type, context)  {
                 print("Type '\(type)' mismatch:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                completion(nil)
             } catch let error {
                 assertionFailure(error.localizedDescription)
                 completion(nil)
@@ -381,7 +386,7 @@ class NetworkService {
     
     func updateApplication(job:Int, applicant_username: String, application_id: Int,status:String){
         guard  let url = URL(string: "\(api_url)/applications/\(application_id)")  else {
-           
+            
             fatalError("Missing URL")
             
         }
@@ -404,30 +409,29 @@ class NetworkService {
             print(urlRequest)
         } catch let error {
             assertionFailure(error.localizedDescription)
-         
+            
             return
         }
         
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let error = error {
                 print("Request error: ", error)
-         
+                
                 return
             }
             // ensure there is data returned
             guard let responseData = data else {
                 assertionFailure("nil Data received from the server")
-        
+                
                 return
             }
             do {
                 
                 if let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] {
-                        // try to read out a string array
-                        if let names = json["names"] as? [String] {
-                            print(names)
-                        }
-                    }
+                   
+                    
+                    print(responseData)
+                }
                 
                 
             } catch let DecodingError.dataCorrupted(context) {
@@ -443,7 +447,7 @@ class NetworkService {
                 print("codingPath:", context.codingPath)
             } catch let error {
                 assertionFailure(error.localizedDescription)
-              
+                
             }
         }
         dataTask.resume()
@@ -525,11 +529,11 @@ class NetworkService {
     
     
     
-    func createJob(name: String, description:String, type: String, environment:String, completion: @escaping (Bool) -> ()){
+    func createJob(name: String, description:String, type: String, environment:String, completion: @escaping (Job?) -> ()){
         
         
         guard  let url = URL(string: "\(api_url)/jobs")  else {
-            completion(false)
+            completion(nil)
             fatalError("Missing URL")
             
         }
@@ -558,7 +562,7 @@ class NetworkService {
             
         } catch let error {
             assertionFailure(error.localizedDescription)
-            completion(false)
+            completion(nil)
             return
         }
         
@@ -566,37 +570,121 @@ class NetworkService {
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let error = error {
                 print("Request error: ", error)
-                completion(false)
+                completion(nil)
                 return
             }
             // ensure there is data returned
-            guard data != nil else {
+            guard let responseData = data else {
                 assertionFailure("nil Data received from the server")
-                completion(false)
+                completion(nil)
                 return
             }
             do {
                 
-                //TODO: Parse Response
+                let job  = try JSONDecoder().decode(Job.self, from: responseData)
+                completion(job)
                 
             } catch let DecodingError.dataCorrupted(context) {
                 print(context)
-                completion(false)
+                completion(nil)
             } catch let DecodingError.keyNotFound(key, context) {
                 print("Key '\(key)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
-                completion(false)
+                completion(nil)
             } catch let DecodingError.valueNotFound(value, context) {
                 print("Value '\(value)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
-                completion(false)
+                completion(nil)
             } catch let DecodingError.typeMismatch(type, context)  {
                 print("Type '\(type)' mismatch:", context.debugDescription)
                 print("codingPath:", context.codingPath)
-                completion(false)
+                completion(nil)
             } catch let error {
                 assertionFailure(error.localizedDescription)
-                completion(false)
+                completion(nil)
+            }
+        }
+        dataTask.resume()
+        
+        
+        
+    }
+    
+    
+    
+    
+    func editJob(id: Int,name: String, description:String, type: String, environment:String, completion: @escaping (Job?) -> ()){
+        
+        
+        guard  let url = URL(string: "\(api_url)/jobs/\(id)")  else {
+            completion(nil)
+            fatalError("Missing URL")
+            
+        }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "PUT"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+        
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let parameters: [String: Any] = [
+            "name": name,
+            "description": description,
+            "type" : type,
+            "environment": environment
+        ]
+        
+        
+        let params : [String : Any] = [
+            "data" : parameters
+        ]
+        
+        do {
+            // convert parameters to Data and assign dictionary to httpBody of request
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params)
+            
+        } catch let error {
+            assertionFailure(error.localizedDescription)
+            completion(nil)
+            return
+        }
+        
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                completion(nil)
+                return
+            }
+            // ensure there is data returned
+            guard let responseData = data else {
+                assertionFailure("nil Data received from the server")
+                completion(nil)
+                return
+            }
+            do {
+                
+                let job  = try JSONDecoder().decode(Job.self, from: responseData)
+                completion(job)
+                
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+                completion(nil)
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                completion(nil)
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                completion(nil)
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                completion(nil)
+            } catch let error {
+                assertionFailure(error.localizedDescription)
+                completion(nil)
             }
         }
         dataTask.resume()
@@ -895,9 +983,6 @@ class NetworkService {
                 
                 let company  = try JSONDecoder().decode(MyApplicationJobCompany.self, from: responseData)
                 
-                
-                
-                
                 completion(company)
                 
                 
@@ -926,4 +1011,68 @@ class NetworkService {
         
     }
     
+    
+
+    func deleteJob(job_id: Int, completion: @escaping (Job?) -> ()){
+        
+        guard  let url = URL(string: "\(api_url)/jobs/\(job_id)")  else {
+            completion(nil)
+            fatalError("Missing URL")
+            
+        }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "DELETE"
+        urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
+        
+        
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                completion(nil)
+                return
+            }
+            // ensure there is data returned
+        
+            
+            guard let responseData = data else {
+                print("nil Data received from the server")
+                completion(nil)
+                
+                return
+            }
+            do {
+                
+                let job  = try JSONDecoder().decode(Job.self, from: responseData)
+                
+                completion(job)
+                
+                
+                
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+                completion(nil)
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                completion(nil)
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                completion(nil)
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                completion(nil)
+            } catch let error {
+                assertionFailure(error.localizedDescription)
+                completion(nil)
+            }
+        }
+        dataTask.resume()
+        
+        
+        
+        
+    }
 }

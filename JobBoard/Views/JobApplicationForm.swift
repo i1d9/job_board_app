@@ -44,6 +44,7 @@ struct JobApplicationForm: View {
     @State private var selectedData: Data?  = nil
     @State private var pdfDocument : PDFDocument? = nil
     @State private var pdfDocumentURL : URL? = nil
+    @State private var applicationProgressAlert = false
     
     var job : Job
     
@@ -102,7 +103,12 @@ struct JobApplicationForm: View {
                         network.createApplication(selectedImageData: selectedData!, job: job.id){
                             result in
                             
-                            print(result)
+                            applicationProgressAlert = true
+                           
+                        }
+                    }.alert("Your application is being processed", isPresented: $applicationProgressAlert) {
+                        Button("OK", role: .cancel) {
+                            dismiss()
                         }
                     }
                 }

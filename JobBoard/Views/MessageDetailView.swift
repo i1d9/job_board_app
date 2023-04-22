@@ -12,6 +12,7 @@ struct MessageDetailView: View {
     @State var socketMessage : SocketMessage
     @State private var message : String = ""
     
+    
     @State var socket : SocketService
     var body: some View {
         
@@ -35,10 +36,6 @@ struct MessageDetailView: View {
                 }.navigationTitle(socketMessage.receiver).onAppear{
                     print(NetworkService.current_user!.id)
                 }
-            }.toolbar{
-                ToolbarItem{
-                    Text("Call")
-                }
             }
             
             
@@ -57,9 +54,10 @@ struct MessageDetailView: View {
             
             
             socket.joinRoom(room_name: socketMessage.room)
-            print("Entering")
+            
+            
+        
         }.onDisappear{
-            print("Exiting")
             socket.exitRoom(room_name: socketMessage.room)
         }
     }
@@ -80,7 +78,7 @@ struct MyMessageView: View {
         HStack{
             Spacer()
             
-            Text(text).foregroundColor(.white).padding(10).background(.green).cornerRadius(8)
+            Text(text).foregroundColor(.white).padding(10).background(.blue).cornerRadius(8)
             
             
         }.padding(10)

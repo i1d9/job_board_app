@@ -13,18 +13,31 @@ struct CompanyJob: View {
     
     @State private var jobs : [MyCompanyJob] = []
     var body: some View {
-        List(jobs) { job in
-            
-            NavigationLink(destination: CompanyJobDetail(job: job)){
-                Text(job.name)
-            }
-            
-        }.onAppear{
-            network.listMyJobs{company_jobs in
+       
+            List(jobs) { job in
                 
-                jobs = company_jobs
-                print(jobs)
-            }
+                NavigationLink(destination: CompanyJobDetail(job: job)){
+                    Text(job.name)
+                }
+                
+            }.navigationBarTitle("My Jobs").toolbar {
+                ToolbarItem {
+                 
+                    
+                    NavigationLink("Add"){
+                        
+                        JobForm(job: Job(id: 0, name: "", description: "", type: "", environment: "", status: ""))
+                    }                }
+                
+            }.onAppear{
+                network.listMyJobs{company_jobs in
+                    
+                    jobs = company_jobs
+                    
+                    
+                    
+                }
+        
         }
     }
 }

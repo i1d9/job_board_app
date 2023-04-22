@@ -11,11 +11,16 @@ import Foundation
 
 import SocketIO
 
+import Combine
+
 
 
 struct MM: Codable{
     
     var payload : [SocketMessage]
+    
+    
+    
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -34,52 +39,99 @@ final class SocketService : ObservableObject{
         self.socket = manager.defaultSocket
         
         self.socket.on(clientEvent: .connect, callback: {data, ack in
-            
-            
             print("Connected")
         })
         
-        
-        
-        
         self.socket.on("messages") {data, ack in
-            
             
             guard let cur = data[0] as? String else { return }
             let jsonObjectData = cur.data(using: .utf8)!
-
-            // Decode the json data to a Candidate struct
-            let candidate = try? JSONDecoder().decode(
-                MM.self,
-                from: jsonObjectData
-            )
-            
-            
-            self.socket_messages = candidate!.payload
-            
             
 
+            
+            do {
+                
+                let candidate  =  try JSONDecoder().decode(
+                    MM.self,
+                    from: jsonObjectData
+                )
+
+
+                self.socket_messages = candidate.payload
+                
+                
+                
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+                self.socket_messages = []
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                self.socket_messages = []
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                self.socket_messages = []
+                
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                self.socket_messages = []
+            } catch let error {
+                assertionFailure(error.localizedDescription)
+                self.socket_messages = []
+            }
+
+            
+            
         }
-        
-        
         
         self.socket.on("room_messages") {data, ack in
             
-            
             guard let cur = data[0] as? String else { return }
             let jsonObjectData = cur.data(using: .utf8)!
+            
+         
+            
+            do {
+                
+                let room_details  =  try JSONDecoder().decode(
+                    SocketMessage.self,
+                    from: jsonObjectData
+                )
 
-            // Decode the json data to a Candidate struct
-            let candidate = try? JSONDecoder().decode(
-                SocketMessage.self,
-                from: jsonObjectData
-            )
-            
-            
-            self.room = candidate!
-            
-            
 
+                self.room = room_details
+                
+                print(room_details)
+                
+                
+                
+                
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+                self.room = SocketMessage(id: 0, room: "", texts: [])
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                self.room = SocketMessage(id: 0, room: "", texts: [])
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                self.room = SocketMessage(id: 0, room: "", texts: [])
+                
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                self.room = SocketMessage(id: 0, room: "", texts: [])
+            } catch let error {
+                assertionFailure(error.localizedDescription)
+                self.room = SocketMessage(id: 0, room: "", texts: [])
+            }
+
+            
+            
+            
         }
         
         

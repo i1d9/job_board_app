@@ -30,10 +30,8 @@ struct ProfileView: View {
                     Image(systemName: "person")
                     
                     VStack(alignment: .leading){
-                        HStack{
-                            Text(first_name)
-                            Text(last_name)
-                        }
+                        Text("\(first_name) \(last_name)")
+                        
                         Text(email)
                         
                     }
@@ -70,6 +68,8 @@ struct ProfileView: View {
             }
         }.onAppear{
             network.my_profile{user in
+                
+                
                 username = user.username
                 email = user.email
                 first_name = user.first_name

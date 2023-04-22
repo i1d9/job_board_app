@@ -11,33 +11,26 @@ import PDFKit
 
 struct AuthenticationResponse :  Codable{
     
-    var user : User
+ var user : User
+ enum AuthResponseKeys: String, CodingKey {
+  case jwt = "jwt", user = "user"
+   enum UserDetailsKeys : String, CodingKey {
+     case id = "id", username = "username", email = "email", first_name = "first_name", last_name = "last_name", phone_number = "phone_number"
+   }
+ }
     
-    enum AuthResponseKeys: String, CodingKey {
-        case jwt = "jwt"
-        case user = "user"
-        
-        enum UserDetailsKeys : String, CodingKey {
-            case id = "id", username = "username", email = "email", first_name = "first_name", last_name = "last_name", phone_number = "phone_number"
-        }
+ init(from decoder: Decoder) throws {
+  let authReponseContainer = try decoder.container(keyedBy: AuthResponseKeys.self)
+  let userDetailsContainer = try authReponseContainer.nestedContainer(keyedBy: AuthResponseKeys.UserDetailsKeys.self, forKey: .user)
+  let id = try userDetailsContainer.decode(Int.self, forKey: .id)
+  let phone_number = try userDetailsContainer.decode(String.self, forKey: .phone_number)
+  let username = try userDetailsContainer.decode(String.self, forKey: .username)
+  let first_name = try userDetailsContainer.decode(String.self, forKey: .first_name)
+  let last_name = try userDetailsContainer.decode(String.self, forKey: .last_name)
+  let email = try userDetailsContainer.decode(String.self, forKey: .email)
+  let jwt = try authReponseContainer.decode(String.self, forKey: .jwt)
+  self.user = User(username: username, id: id, phone_number: phone_number, email: email, first_name: first_name, last_name: last_name, token: jwt )
     }
-    
-    init(from decoder: Decoder) throws {
-        let authReponseContainer = try decoder.container(keyedBy: AuthResponseKeys.self)
-        let userDetailsContainer = try authReponseContainer.nestedContainer(keyedBy: AuthResponseKeys.UserDetailsKeys.self, forKey: .user)
-        
-        let id = try userDetailsContainer.decode(Int.self, forKey: .id)
-        let phone_number = try userDetailsContainer.decode(String.self, forKey: .phone_number)
-        let username = try userDetailsContainer.decode(String.self, forKey: .username)
-        let first_name = try userDetailsContainer.decode(String.self, forKey: .first_name)
-        let last_name = try userDetailsContainer.decode(String.self, forKey: .last_name)
-        let email = try userDetailsContainer.decode(String.self, forKey: .email)
-        let jwt = try authReponseContainer.decode(String.self, forKey: .jwt)
-        
-        self.user = User(username: username, id: id, phone_number: phone_number, email: email, first_name: first_name, last_name: last_name, token: jwt )
-        
-    }
-    
 }
 
 
@@ -185,7 +178,7 @@ extension Data {
     mutating func append(_ string: String) {
         if let data = string.data(using: .utf8) {
             append(data)
-            print("data======>>>",data)
+            
         }
     }
 }
@@ -212,17 +205,18 @@ struct SocketMessage : Codable, Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.room = try container.decode(String.self, forKey: .room)
         self.id = try container.decode(Int.self, forKey: .id)
-        self.texts = try container.decode([SocketMessageItem].self, forKey: .texts)
+            self.texts =  try container.decode([SocketMessageItem].self, forKey: .texts)
+        
         
         let users = self.room.components(separatedBy: "_")
         
         
         if(NetworkService.current_user?.username == users[0]){
             self.sender = users[0]
-            self.receiver = users[1]
+            self.receiver = users[2]
         }else{
-            self.sender = users[1]
-            self.receiver = users[0]
+            self.sender = users[0]
+            self.receiver = users[2]
         }
         
     }
@@ -233,17 +227,17 @@ struct SocketMessageItem: Codable, Identifiable{
     
     
     
-    var id : String
+    var id : Int
     var source : Int
     var text : String
-    var created : Int
 
+    
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(String.self, forKey: .id)
+        self.id = try container.decode(Int.self, forKey: .id)
         self.source = try container.decode(Int.self, forKey: .source)
         self.text = try container.decode(String.self, forKey: .text)
-        self.created = try container.decode(Int.self, forKey: .created)
+        
     }
 }

@@ -130,4 +130,16 @@ struct MyCompanyApplication : Codable, Identifiable {
         self.cv = try container.decode(MyCompanyApplicationCV.self, forKey: .cv)
         self.applicant = try container.decode(MyCompanyJobApplicant.self, forKey: .applicant)
     }
+    
+    
+    
+    init(id: Int,status: String, cv : MyCompanyApplicationCV, applicant: MyCompanyJobApplicant) {
+        
+     
+        self.id = id
+        self.cv = cv
+        self.status = status
+        
+        self.applicant = applicant
+    }
 }

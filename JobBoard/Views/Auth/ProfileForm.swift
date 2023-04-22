@@ -69,7 +69,7 @@ struct ProfileForm: View {
                         
                         network.updateProfile(selectedImageData: selectedImageData,username: username, first_name: first_name, last_name: last_name, email: email, phone_number: phone_number){user in
                             
-                            print("Image uploaded?")
+                            
                             print(user)
                         }
                     }else{

@@ -150,9 +150,6 @@ struct Job : Codable, Identifiable{
 
 struct MyCompanyJob: Codable, Identifiable{
     
-    
-    
-    
     var id : Int
     var name : String
     var status : String

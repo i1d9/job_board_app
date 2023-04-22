@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct Company : Codable{
     var id: Int
     var name : String
@@ -17,7 +16,6 @@ struct Company : Codable{
     var category : String //Tech/Pharma/Transport/NGO/Finance
     var bio: String
     var logo : CompanyLogo?
-    
     init(id: Int, name: String, phone: String, email: String, address: String, category: String, bio: String, logo: CompanyLogo?) {
         self.id = id
         self.name = name
@@ -28,22 +26,14 @@ struct Company : Codable{
         self.bio = bio
         self.logo = logo
     }
-    
-    
-    
-    
 }
 
-
-
 struct CompanyLogo : Codable{
-    
     var url : String
     var thumbnail : String
     var small : String
     var medium : String
     var large : String
-    
     init(url: String, thumbnail: String, small: String, medium: String, large: String) {
         self.url = url
         self.thumbnail = thumbnail
@@ -51,7 +41,6 @@ struct CompanyLogo : Codable{
         self.medium = medium
         self.large = large
     }
-    
 }
 
 
