@@ -24,11 +24,7 @@ struct JobCard: View {
                         } placeholder: {
                             ProgressView()
                         }
-                    .clipShape(Circle())
-                                .overlay {
-                                    Circle().stroke(.white, lineWidth: 1)
-                                }
-                                .shadow(radius: 7).frame(width: 50, height: 50)
+                        .shadow(radius: 7).frame(width: 50, height: 50).padding(16)
                 
                 VStack(alignment: .leading){
                     Text(job.name)

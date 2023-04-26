@@ -126,7 +126,6 @@ class NetworkService {
                 
                 NetworkService.current_user = profile_response.user
                 
-                print(profile_response.user)
                 
                 completion(profile_response.user)
             } catch let error {
@@ -241,9 +240,7 @@ class NetworkService {
         urlRequest.setValue("Bearer \(NetworkService.current_user!.token)", forHTTPHeaderField: "Authorization")
     }
     
-    func viewApplication(id: Int){
-        
-    }
+  
     
     
     

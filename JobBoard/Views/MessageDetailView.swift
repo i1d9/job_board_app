@@ -18,15 +18,22 @@ struct MessageDetailView: View {
         
         ZStack(alignment: .bottom){
             ScrollView{
+                
+                HStack(alignment: .center){
+                 
+                    Text("Application Accepted").padding(4).background(.green).foregroundColor(.white)
+                 
+                }
                 VStack(alignment: .trailing){
                     
                     
                     ForEach(socket.room.texts, id:
                                 \.id){text in
                         
-                        if(text.source == NetworkService.current_user?.id ){
+                        if(text.source == NetworkService.current_user?.id && text.source != 0 ){
+                            
                             MyMessageView(text: text.text)
-                        }else{
+                        }else if (text.source != 0){
                             TheirMessage(text: text.text)
                             
                         }
@@ -41,22 +48,17 @@ struct MessageDetailView: View {
             
             HStack {
                 TextField("Enter your message", text: $message).textFieldStyle(.roundedBorder)
-                Button("Send"){
-
+                
+                Image(systemName: "paperplane").onTapGesture {
+                    
                     socket.sendMesage(room_name: socketMessage.room, message: message)
                     message = ""
-                }
+                }.foregroundColor(.blue)
+               
             }.padding(16)
-            
-            
         }.onAppear{
-            
-            
-            
             socket.joinRoom(room_name: socketMessage.room)
-            
-            
-        
+
         }.onDisappear{
             socket.exitRoom(room_name: socketMessage.room)
         }
